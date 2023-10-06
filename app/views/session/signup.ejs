@@ -1,22 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Registrar</title>
 </head>
 <body>
     <h1>Faça seu registro!</h1>
-    <form action="/login" method="post">
+    <form action="/signup" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" name="name" value="<%= data ? data.name : ""%>">
         <label for="username">Nome de usuário:</label>
-        <input type="text" name="username">
+        <input type="text" name="username" value="<%= data ? data.username : ""%>">
         <label for="email">Email:</label>
-        <input type="email" name="email">
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha">
-        <label for="senhaC">Confirme sua senha:</label>
-        <input type="password" name="senhaC">
+        <input type="email" name="email" value="<%= data ? data.email : ""%>">
+        <label for="password">Senha:</label>
+        <input type="password" name="password">
+        <label for="passwordC">Confirme sua senha:</label>
+        <input type="password" name="passwordC">
         <input type="submit" value="Criar conta">
     </form>
+    <section>
+		<% if(error) { %>
+			<ul>
+				<% for(let i=0; i < error.length; i++) { %>
+					<li>
+						<%=error[i].msg%>
+					</li>
+				<% } %>
+			</ul>
+		<% } %>
+	</section>
 </body>
 </html>
