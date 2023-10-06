@@ -5,23 +5,26 @@ const prisma = new PrismaClient();
 
 const signin = (req, res) => {
     if(req.method === 'GET')
-        res.render('session/login.ejs');
+        res.render('session/login.ejs', {erro: null});
     else if(req.method === 'POST'){
         usersModel.getUserByEmail(req.body.email)
             .then((user) => {
-                console.log(user);
-                console.log(req.body)
-                bcrypt.compare(req.body.password, user.password, (err, result) => {
-                    if(err)
-                        res.status(500).send(err).end();
-                    if(result){
-                        delete user.password;
-                        req.session.user = user;
-                        console.log("logado");
-                    }else{
-                        console.log("senha errada");
-                    }
-                })
+                if(user){
+                    console.log(user);
+                    console.log(req.body)
+                    bcrypt.compare(req.body.password, user.password, (err, result) => {
+                        if(err)
+                            res.status(500).send(err).end();
+                        if(result){
+                            delete user.password;
+                            req.session.user = user;
+                            res.redirect('/perfil');
+                        }else{
+                            res.render('session/login.ejs', {erro: "Senha ou email incorreto"});
+                        }
+                    })
+                } else
+                    res.render('session/login.ejs', {erro: "Senha ou email incorreto"});
             }).catch((error) => {
 
             }).finally(async () => {
