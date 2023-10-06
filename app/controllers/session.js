@@ -1,4 +1,4 @@
-const userModel = require('../models/users');
+const usersModel = require('../models/users');
 const bcrypt = require('bcrypt');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -6,6 +6,28 @@ const prisma = new PrismaClient();
 const signin = (req, res) => {
     if(req.method === 'GET')
         res.render('session/login.ejs');
+    else if(req.method === 'POST'){
+        usersModel.getUserByEmail(req.body.email)
+            .then((user) => {
+                console.log(user);
+                console.log(req.body)
+                bcrypt.compare(req.body.password, user.password, (err, result) => {
+                    if(err)
+                        res.status(500).send(err).end();
+                    if(result){
+                        delete user.password;
+                        req.session.user = user;
+                        console.log("logado");
+                    }else{
+                        console.log("senha errada");
+                    }
+                })
+            }).catch((error) => {
+
+            }).finally(async () => {
+                await prisma.$disconnect();
+            })
+    }
 }
 
 const signup = (req, res, error) => {
@@ -24,7 +46,7 @@ const signup = (req, res, error) => {
                     res.status(500).send(err).end();
                 data.password = hash;
 
-                userModel.insertUser(data)
+                usersModel.insertUser(data)
                 .then((user) => {
                     res.redirect('/login')
                 }).catch((error) => {

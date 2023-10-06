@@ -7,4 +7,12 @@ const insertUser = async(data) => {
     });
 }
 
-module.exports = {insertUser};
+const getUserByEmail = async(email) => {
+    return await prisma.user.findUnique({
+        where:{
+            email: email,
+        },
+    });;
+}
+
+module.exports = {insertUser, getUserByEmail};

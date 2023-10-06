@@ -7,6 +7,9 @@ module.exports = {
         app.get('/login', (req, res) => {
             sessionController.signin(req, res);
         })
+        app.post('/login', (req, res) => {
+            sessionController.signin(req, res);
+        })
     },
     signup: (app) => {
         app.get('/signup', (req, res) => {
