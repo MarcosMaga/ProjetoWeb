@@ -7,12 +7,19 @@ const insertUser = async(data) => {
     });
 }
 
+const updateUser = async(userId, data) => {
+    return await prisma.user.update({
+        where: { id: userId },
+        data: data
+    });
+}
+
 const getUserByEmail = async(email) => {
     return await prisma.user.findUnique({
         where:{
             email: email,
         },
-    });;
+    });
 }
 
-module.exports = {insertUser, getUserByEmail};
+module.exports = {insertUser, updateUser,getUserByEmail};
