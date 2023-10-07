@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-    <h1>Faça seu Login!</h1>
-    <form action="/login" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email">
-        <label for="password">Senha:</label>
-        <input type="password" name="password">
-        <input type="submit" value="Logar">
-    </form>
-    <p><%= erro %></p>
+    <div class="container-login">
+        <div class="content-login">
+            <h1>Faça seu Login!</h1>
+            <p>Entre com seus dados de acesso</p>
+            <form action="/login" method="post">
+                <input type="email" name="email" placeholder="Digite seu email">
+                <input type="password" name="password" placeholder="Digite seu email">
+                <input type="submit" value="Logar" class="bt-login">
+            </form>
+            <p><%= erro %></p>
+        </div>
+    </div>
 </body>
 </html>
