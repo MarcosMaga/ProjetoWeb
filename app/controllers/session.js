@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 const signin = (req, res) => {
     if(req.method === 'GET')
-        res.render('session/login.ejs', {erro: null});
+        res.render('session/login.ejs', {error: null});
     else if(req.method === 'POST'){
         usersModel.getUserByEmail(req.body.email)
             .then((user) => {
@@ -23,11 +23,11 @@ const signin = (req, res) => {
                             req.session.user = user;
                             res.redirect('/perfil');
                         }else{
-                            res.render('session/login.ejs', {erro: "Senha ou email incorreto"});
+                            res.render('session/login.ejs', {error: "Senha ou email incorreto"});
                         }
                     })
                 } else
-                    res.render('session/login.ejs', {erro: "Senha ou email incorreto"});
+                    res.render('session/login.ejs', {error: "Senha ou email incorreto"});
             }).catch((error) => {
                 logger.error(`Erro ao achar usuário com email: ${req.body.email}.`);
             }).finally(async () => {

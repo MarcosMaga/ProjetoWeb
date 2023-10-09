@@ -1,5 +1,14 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto/Roboto-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+  
+
 body{
     background-color: rgb(241, 241, 241);
+    font-family: Roboto;
 }
 
 .container-login{
@@ -23,6 +32,8 @@ body{
     margin-bottom: 10px;
     font-size: 18px;
     display: block;
+    color: white;
+    background-color: #5CB85C;
 }
 
 .content-login input{
@@ -31,6 +42,9 @@ body{
     margin-right: auto;
     width: 80%;
     margin-bottom: 10px;
+    padding: 2%;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }
 
 .content-login h1 {
@@ -39,6 +53,17 @@ body{
     margin-bottom: 20px;
     margin-left: 40px;
     margin-right: 40px;
+}
+
+.content-login .error {
+    color: tomato;
+    background-color: white;
+}
+
+.content-login a{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .content-login p {

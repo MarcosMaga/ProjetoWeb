@@ -9,14 +9,15 @@
 <body>
     <div class="container-login">
         <div class="content-login">
-            <h1>Faça seu Login!</h1>
+            <h1>Faça seu Login</h1>
             <p>Entre com seus dados de acesso</p>
             <form action="/login" method="post">
-                <input type="email" name="email" placeholder="Digite seu email">
-                <input type="password" name="password" placeholder="Digite seu email">
+                <input type="email" name="email" placeholder="Digite seu email" required>
+                <input type="password" name="password" placeholder="Digite sua senha" required>
                 <input type="submit" value="Logar" class="bt-login">
             </form>
-            <p><%= erro %></p>
+            <p class="error"><%= error %></p>
+            <a href="signup">Registre-se</a>
         </div>
     </div>
 </body>
