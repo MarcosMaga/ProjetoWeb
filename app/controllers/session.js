@@ -21,7 +21,7 @@ const signin = (req, res) => {
                             usersModel.updateUser(user.id, user);
                             delete user.password;
                             req.session.user = user;
-                            res.redirect('/perfil');
+                            res.redirect(`/perfil/${user.username}`);
                         }else{
                             res.render('session/login.ejs', {error: "Senha ou email incorreto"});
                         }

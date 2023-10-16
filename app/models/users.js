@@ -22,4 +22,12 @@ const getUserByEmail = async(email) => {
     });
 }
 
-module.exports = {insertUser, updateUser,getUserByEmail};
+const getUserByUsername = async(username) => {
+    return await prisma.user.findUnique({
+        where:{
+            username: username,
+        }
+    });
+}
+
+module.exports = {insertUser, updateUser,getUserByEmail, getUserByUsername};
