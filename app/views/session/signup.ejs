@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body>
-    <h1>Faça seu registro!</h1>
-    <form action="/signup" method="post">
-        <label for="name">Nome:</label>
-        <input type="text" name="name" value="<%= data ? data.name : ""%>">
-        <label for="username">Nome de usuário:</label>
-        <input type="text" name="username" value="<%= data ? data.username : ""%>">
-        <label for="email">Email:</label>
-        <input type="email" name="email" value="<%= data ? data.email : ""%>">
-        <label for="password">Senha:</label>
-        <input type="password" name="password">
-        <label for="passwordC">Confirme sua senha:</label>
-        <input type="password" name="passwordC">
-        <input type="submit" value="Criar conta">
-    </form>
-    <section>
-		<% if(error) { %>
-			<ul>
-				<% for(let i=0; i < error.length; i++) { %>
-					<li>
-						<%=error[i].msg%>
-					</li>
-				<% } %>
-			</ul>
-		<% } %>
-	</section>
+    <div class="container-login">
+        <div class="content-login">
+            <h1>Faça seu registro</h1>
+            <p>Entre com seus dados de acesso</p>
+            <form action="/signup" method="post">
+                <input type="text" name="name" value="<%= data ? data.name : ""%>" placeholder="Digite seu nome">
+                <input type="text" name="username" value="<%= data ? data.username : ""%>"
+                    placeholder="Digite seu nome de usuário">
+                <input type="email" name="email" value="<%= data ? data.email : ""%>" placeholder="Digite seu email">
+                <input type="password" name="password" placeholder="Digite uma senha">
+                <input type="password" name="passwordC" placeholder="Confirme a sua senha">
+                <input type="submit" value="Criar conta">
+            </form>
+            <section class="error-list">
+                <% if(error) { %>
+                    <ul>
+                        <% for(let i=0; i < error.length; i++) { %>
+                            <li>
+                                <%=error[i].msg%>
+                            </li>
+                            <% } %>
+                    </ul>
+                    <% } %>
+            </section>
+        </div>
+    </div>
 </body>
+
 </html>

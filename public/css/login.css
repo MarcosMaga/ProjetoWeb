@@ -5,10 +5,9 @@
     font-style: normal;
 }
   
-
 body{
     background-color: rgb(241, 241, 241);
-    font-family: Roboto;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
 .container-login{
@@ -72,4 +71,13 @@ body{
     border-bottom: 1px solid #ddd;
 }
 
+.error-list{
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+}
 
+.error-list li{
+    margin-left: 10px;
+    margin-right: 10px;
+}
