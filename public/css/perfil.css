@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto/Roboto-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    background-color: #121212;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+.sidebar{
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    background-color: #202020;
+    border-right: 1px solid #393939;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px;
+    color: white;
+    font-size: larger;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar i{
+    margin: 5px;
+}
+
+.content{
+    margin-left: 250px;
+}
+
+.perfil-header{
+    display: flex;
+    color: white;
+}
+
+.perfil-header img{
+    width: 15%;
+    margin: 25px;
+    border-radius: 50%;
+}
+
+.perfil-header .data{
+    margin-top: 15px;
+    display: block;
+}
+
+.perfil-header .data .config{
+    color: gray;
+    font-size: 25px;
+}
+
+hr{
+    border-color: #393939;
+    margin: 5px;
+}

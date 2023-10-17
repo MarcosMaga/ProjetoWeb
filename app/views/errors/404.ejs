@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>404</title>
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            src: url('../fonts/Roboto/Roboto-Regular.ttf') format('ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Roboto, Arial;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div style="display:flex; margin: auto; justify-content: center; align-items: center;">
+        <div style="display: block;">
+            <h2 style="text-align: center;">
+                <%= error %>
+            </h2>
+            <img style="width: 30%; display: flex; margin: auto" src="/img/404.jpg" alt="">
+        </div>
+    </div>
 </body>
+
 </html>

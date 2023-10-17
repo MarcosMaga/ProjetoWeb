@@ -18,5 +18,10 @@ module.exports = {
         app.post('/signup', userValidator, (req, res) => {
             sessionController.signup(req, res, validationResult(req));
         })
+    },
+    logout: (app) => {
+        app.get('/logout', (req, res) => {
+            sessionController.logout(req, res);
+        })
     }
 }

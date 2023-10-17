@@ -3,9 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title><%=perfil.name%></title>
+    <link rel="stylesheet" href="/css/perfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    
+    <% if(user) { %>
+    <div class="sidebar">
+        <ul>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">Página Inicial</a></li>
+            <li><i class="fa fa-search" aria-hidden="true"></i><a href="#">Pesquisar</a></li>
+            <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="#">Caixa de Entrada</a></li>
+            <li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="<%=`perfil/${user.username}`%>">Perfil</a></li>
+            <li><i class="fa fa-sign-out" aria-hidden="true"></i></i><a href="/logout">Sair</a></li>
+        </ul>
+    </div>
+    <% } %>
+    <div class="content">
+        <div class="perfil-header">
+            <img src="<%= perfil.picture%>" alt="">
+            <div class="data">
+                <h2>@<%= perfil.username %>
+                    <% if (user && perfil.id == user.id) { %>
+                      <a class="config" href="perfil/config">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                      </a>
+                    <% } %>
+                  </h2>                
+                  <h3><%= perfil.name%></h3>    
+            </div>
+        </div>
+        <hr>
+    </div>
 </body>
 </html>
