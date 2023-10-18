@@ -17,4 +17,10 @@ const perfil = (req, res) => {
         });
 }
 
-module.exports = {perfil};
+const config = (req, res) => {
+    if(req.method == 'GET'){
+        res.render('perfil/config.ejs', {user: req.session.user});
+    }
+}
+
+module.exports = {perfil, config};

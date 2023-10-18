@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=perfil.name%></title>
+    <title>Configuração</title>
     <link rel="stylesheet" href="/css/menu.css">
-    <link rel="stylesheet" href="/css/perfil.css">
+    <link rel="stylesheet" href="/css/config.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -21,20 +21,16 @@
     </div>
     <% } %>
     <div class="content">
-        <div class="perfil-header">
-            <img src="<%= perfil.picture%>" alt="">
-            <div class="data">
-                <h2>@<%= perfil.username %>
-                    <% if (user && perfil.id == user.id) { %>
-                      <a class="config" href="<%= helpers.baseUrl('config/perfil')%>">
-                        <i class="fa fa-cog" aria-hidden="true"></i>
-                      </a>
-                    <% } %>
-                  </h2>                
-                  <h3><%= perfil.name%></h3>    
-            </div>
-        </div>
-        <hr>
+        <h1>Dados da conta</h1>
+        <form action="<%= helpers.baseUrl('config/perfil')%>" method="POST">
+            <label for="name">Nome</label>
+            <input type="text" name="name" value="<%=user.name%>">
+            <label for="username">Nome de usuário</label>
+            <input type="text" name="username" value="<%=user.username%>">
+            <label for="bio">Bio</label>
+            <input type="text" name="bio" value="<%=user.bio%>">
+            <input type="submit" value="Salvar">
+        </form>
     </div>
 </body>
 </html>

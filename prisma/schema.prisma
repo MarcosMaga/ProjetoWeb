@@ -16,6 +16,7 @@ model User {
   username String @unique
   email String @unique
   password String
+  bio String @default("")
   picture String @default("/img/standard-pic.png")
   ip String
   createdOn DateTime @default(now())
