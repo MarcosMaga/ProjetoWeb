@@ -32,6 +32,10 @@ body{
     font-size: larger;
 }
 
+.sidebar li:hover {
+    background-color: #393939;
+}
+
 .sidebar a {
     text-decoration: none;
     color: white;

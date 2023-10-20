@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,29 +9,58 @@
     <link rel="stylesheet" href="/css/config.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
     <% if(user) { %>
-    <div class="sidebar">
-        <ul>
-            <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">Página Inicial</a></li>
-            <li><i class="fa fa-search" aria-hidden="true"></i><a href="#">Pesquisar</a></li>
-            <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="#">Caixa de Entrada</a></li>
-            <li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="<%= helpers.baseUrl(`perfil/${user.username}`)%>">Perfil</a></li>
-            <li><i class="fa fa-sign-out" aria-hidden="true"></i></i><a href="/logout">Sair</a></li>
-        </ul>
-    </div>
-    <% } %>
-    <div class="content">
-        <h1>Dados da conta</h1>
-        <form action="<%= helpers.baseUrl('config/perfil')%>" method="POST">
-            <label for="name">Nome</label>
-            <input type="text" name="name" value="<%=user.name%>">
-            <label for="username">Nome de usuário</label>
-            <input type="text" name="username" value="<%=user.username%>">
-            <label for="bio">Bio</label>
-            <input type="text" name="bio" value="<%=user.bio%>">
-            <input type="submit" value="Salvar">
-        </form>
-    </div>
+        <div class="sidebar">
+            <ul>
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">Página Inicial</a></li>
+                <li><i class="fa fa-search" aria-hidden="true"></i><a href="#">Pesquisar</a></li>
+                <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="#">Caixa de Entrada</a></li>
+                <li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a
+                        href="<%= helpers.baseUrl(`perfil/${user.username}`)%>">Perfil</a></li>
+                <li><i class="fa fa-sign-out" aria-hidden="true"></i></i><a href="/logout">Sair</a></li>
+            </ul>
+        </div>
+        <% } %>
+            <div class="content">
+                <h1>Dados da conta</h1>
+                <section class="error-list" style="<%= !error ? 'display: none;' : ''%>">
+                    <% if(error) { %>
+                        <ul>
+                            <% for(let i=0; i < error.length; i++) { %>
+                                <li>
+                                    <%=error[i].msg%>
+                                </li>
+                                <% } %>
+                        </ul>
+                        <% } %>
+                </section>
+                <form action="<%= helpers.baseUrl('config/perfil')%>" method="POST">
+                    <label for="name">Nome</label>
+                    <input type="text" name="name" value="<%=user.name%>">
+                    <label for="username">Nome de usuário</label>
+                    <input type="text" name="username" value="<%=user.username%>">
+                    <label for="bio">Bio</label>
+                    <input type="text" name="bio" value="<%=user.bio%>">
+                    <input type="submit" value="Salvar">
+                </form>
+                <hr>
+                <h1>Foto de perfil</h1>
+                <img id="pic" src="<%= user.picture %>" alt="">
+                <form action="<%= helpers.baseUrl('config/perfil/picture')%>" method="POST" enctype="multipart/form-data">
+                    <div class="custom-file-input">
+                        <input onchange="openToSend()" type="file" id="fileInput" name="fileInput" accept="image/*" />
+                        <label for="fileInput">Trocar</label>
+                    </div>
+                    <input id="sendPic" type="submit" style="display:none">
+                </form>
+            </div>
 </body>
+<script>
+    function openToSend(){
+        document.getElementsByClassName("custom-file-input")[0].style.display = "none";
+        document.getElementById("sendPic").style.display = "block";
+    }
+</script>
 </html>
