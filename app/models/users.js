@@ -30,4 +30,23 @@ const getUserByUsername = async(username) => {
     });
 }
 
-module.exports = {insertUser, updateUser,getUserByEmail, getUserByUsername};
+const searchUser = async(query) => {
+    return await prisma.user.findMany({
+        where: {
+            OR: [
+                {
+                    username: {
+                        contains: query
+                    }
+                },
+                {
+                    name: {
+                        contains: query
+                    }
+                }
+            ]
+        }
+    })
+}
+
+module.exports = {insertUser, updateUser,getUserByEmail, getUserByUsername, searchUser};

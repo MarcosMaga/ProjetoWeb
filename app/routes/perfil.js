@@ -1,7 +1,6 @@
 const perfilController = require('../controllers/perfil');
 const { validationResult } = require('express-validator');
 const { userBasicValidator } = require('../validators/user');
-const helpers = require('../helpers/baseurl');
 const userLogger = require('../middlewares/logged');
 const upload = require('../../config/upload');
 
