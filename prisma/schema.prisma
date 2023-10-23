@@ -20,6 +20,19 @@ model User {
   picture String @default("/img/standard-pic.png")
   ip String
   createdOn DateTime @default(now())
+  followings Follow[] @relation("Followers")
+  followers Follow[] @relation("Followings")
 
   @@map("users")
+}
+
+model Follow{
+  followerId Int
+  follower User @relation("Followers", fields: [followerId], references: [id])
+  followingId Int
+  following User @relation("Followings", fields: [followingId], references: [id] )
+  startAt DateTime @default(now())
+  @@id([followerId, followingId])
+
+  @@map("follows")
 }
