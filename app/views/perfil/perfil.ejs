@@ -34,13 +34,68 @@
                     <% } %>
                   </h2>                
                   <h3><%= perfil.name%></h3>
-                  <p><%= perfil.bio%></p>  
+                  <p><%= perfil.bio%></p>
+                  <div class="follow_data">
+                    <p onclick="openFollowers()" id="followers_count"><strong><%= perfil.followers.length %></strong> seguidores</p>
+                    <p onclick="openFollowings()"><strong><%= perfil.followings.length %></strong> seguindo</p>
+                  </div>
             </div>
         </div>
         <hr>
+    </div>
+    <div style="display: none;" class="followers_table" id="followers">
+        <div style="display: flex;">
+            <h2 style="text-align: left;">Seguidores</h2>
+            <h2 onclick="openFollowers()" style="margin-left: auto; cursor: pointer;">X</h2>
+        </div>
+        <hr>
+        <% perfil.followers.forEach((u) => {  %>
+            <div class="user" onclick="goToPerfil('<%= u.follower.username%>')">
+                <img src="<%= u.follower.picture %>" alt="">
+                <div class="user-text">
+                    <p><strong><%= u.follower.username%></strong></p>
+                    <p><%= u.follower.name %></p>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <div style="display: none;" class="followers_table" id="followings">
+        <div style="display: flex;">
+            <h2 style="text-align: left;">Seguindo</h2>
+            <h2 onclick="openFollowings()" style="margin-left: auto; cursor: pointer;">X</h2>
+        </div>
+        <hr>
+        <% perfil.followings.forEach((u) => {  %>
+            <div class="user" onclick="goToPerfil('<%= u.following.username%>')">
+                <img src="<%= u.following.picture %>" alt="">
+                <div class="user-text">
+                    <p><strong><%= u.following.username%></strong></p>
+                    <p><%= u.following.name %></p>
+                </div>
+            </div>
+        <% }) %>
     </div>
 </body>
 <% if(user && perfil.id != user.id) { %>
     <script src="/js/follow.js"></script>
 <% } %>
+<script>
+    function goToPerfil(event){
+        window.location.href = '/perfil/' + event;
+    }
+
+    function openFollowers(){
+        if(document.getElementById("followers").style.display == 'block')
+            document.getElementById("followers").style.display = 'none';
+        else
+            document.getElementById("followers").style.display = 'block'
+    }
+
+    function openFollowings(){
+        if(document.getElementById("followings").style.display == 'block')
+            document.getElementById("followings").style.display = 'none';
+        else
+            document.getElementById("followings").style.display = 'block'
+    }
+</script>
 </html>

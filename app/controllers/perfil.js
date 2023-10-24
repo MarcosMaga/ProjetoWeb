@@ -8,6 +8,7 @@ const perfil = (req, res) => {
     usersModel.getUserByUsername(req.params.id)
         .then((user) => {
             if(user){
+                console.log(user);
                 res.render('perfil/perfil.ejs', {user: req.session.user, perfil: user});
             }else{
                 res.render('errors/404.ejs', {error: "Perfil não encontrado :/"});

@@ -26,6 +26,18 @@ const getUserByUsername = async(username) => {
     return await prisma.user.findUnique({
         where:{
             username: username,
+        },
+        include:{
+            followers: {
+                include: {
+                    follower: true
+                }
+            },
+            followings: {
+                include: {
+                    following: true
+                }
+            }
         }
     });
 }

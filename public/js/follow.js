@@ -37,6 +37,12 @@ function callFollow() {
         })
         .then(data => {
             bt.innerHTML = data.msg;
+            let followers = parseInt(document.getElementById('followers_count').innerText.replace(' seguidores', ''));
+
+            if(data.msg == 'Seguir')
+                document.getElementById('followers_count').innerHTML = `<strong>${followers - 1}</strong> seguidores`;
+            else
+                document.getElementById('followers_count').innerHTML = `<strong>${followers + 1}</strong> seguidores`;
         })
         .catch(error => {
             console.error('Erro:', error);

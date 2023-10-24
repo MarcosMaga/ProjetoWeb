@@ -26,6 +26,57 @@
     font-size: medium;
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.follow_data{
+    display: flex;
+}
+
+.follow_data p{
+    margin: 0;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.followers_table{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #202020;
+    padding: 20px;
+    max-height: 50%;
+    overflow: auto;
+}
+
+.followers_table h2{
+    color: white;
+}
+
+.user{
+    display: flex;
+    border-bottom: 1px solid #393939;
+    cursor: pointer;
+}
+
+.user:hover{
+    background-color: #393939;
+}
+
+.user .user-text{
+    display: block;
+}
+
+.user .user-text p{
+    text-align: left;
+    color: white;
+}
+
+.user img{
+    width: 10%;
+    border-radius: 50%;
+    margin: 10px
 }
 
 hr{
