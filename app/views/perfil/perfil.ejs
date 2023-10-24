@@ -29,6 +29,8 @@
                       <a class="config" href="<%= helpers.baseUrl('config/perfil')%>">
                         <i class="fa fa-cog" aria-hidden="true"></i>
                       </a>
+                    <% } else if(user && perfil.id != user.id) { %>
+                        <button class="followButton" onclick="callFollow()" id="<%=`${user.id}-${perfil.id}`%>">Seguir</button>
                     <% } %>
                   </h2>                
                   <h3><%= perfil.name%></h3>
@@ -38,4 +40,7 @@
         <hr>
     </div>
 </body>
+<% if(user && perfil.id != user.id) { %>
+    <script src="/js/follow.js"></script>
+<% } %>
 </html>

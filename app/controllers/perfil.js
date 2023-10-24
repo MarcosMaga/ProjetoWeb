@@ -1,7 +1,6 @@
 const usersModel = require('../models/users');
 const logger = require('../../config/logger');
 const sharp = require('sharp');
-const helpers = require('../helpers/baseurl');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
