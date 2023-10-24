@@ -10,8 +10,13 @@
 }
 
 .perfil-header .data{
-    margin-top: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
     display: block;
+}
+
+.perfil-header .data h2{
+    margin-top: 0px;
 }
 
 .perfil-header .data .config{
