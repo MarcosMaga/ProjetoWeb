@@ -23,6 +23,9 @@ model User {
   followings Follow[] @relation("Followers")
   followers Follow[] @relation("Followings")
 
+  createdPost Post[] @relation("Creator")
+  receivedPost Post[] @relation("Receiver") 
+
   @@map("users")
 }
 
@@ -35,4 +38,18 @@ model Follow{
   @@id([followerId, followingId])
 
   @@map("follows")
+}
+
+model Post{
+  id Int @id @default(autoincrement())
+  creator User @relation("Creator", fields: [creatorId], references: [id])
+  creatorId Int
+  receiver User @relation("Receiver", fields:[receiverId], references: [id])
+  receiverId Int
+  textCreator String
+  textReceiver String
+  approved Boolean
+  createdOn DateTime @default(now())
+
+  @@map("posts")
 }

@@ -8,7 +8,6 @@ const perfil = (req, res) => {
     usersModel.getUserByUsername(req.params.id)
         .then((user) => {
             if(user){
-                console.log(user);
                 res.render('perfil/perfil.ejs', {user: req.session.user, perfil: user});
             }else{
                 res.render('errors/404.ejs', {error: "Perfil não encontrado :/"});
@@ -52,7 +51,6 @@ const picture = async (req, res) => {
         const image = req.file.buffer;
         const timestamp = new Date().getTime();
         const path = __dirname + '/../../public/uploads/img/perfil/' + timestamp + req.file.originalname;
-        console.log(path);
 
         sharp(image)
             .resize(640,640)
