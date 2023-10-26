@@ -13,8 +13,21 @@ const create = (req, res) => {
         }).catch((error) => {
             logger.error(`Erro ao criar Post de  usuário ${data.creatorId} para usuário ${data.receiverId}. Código: ${error.code}`);
         }).finally(async () => {
-            prisma.$disconnect();
+            await prisma.$disconnect();
         })
 }
 
-module.exports = {create};
+const news = (req, res) => {
+    postsModel.getPostsNotViwedByUser(req.session.user.id)
+        .then((posts) => {
+            if(posts.length > 0)
+                res.status(200).send(posts);
+        }).catch((error) => {
+            logger.error(`Erro ao achar Post não vistos do usuário ${req.session.user.id}. Código: ${error.code}`);
+            res.status(500).send(error);
+        }).finally(async () => {
+            await prisma.$disconnect();
+        })
+}
+
+module.exports = {create, news};

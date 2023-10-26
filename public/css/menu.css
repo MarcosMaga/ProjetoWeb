@@ -48,3 +48,31 @@ body{
 .content{
     margin-left: 250px;
 }
+
+.inbox{
+    display: flex;
+}
+
+.inbox a{
+    margin-bottom: auto;
+    margin-top: auto;
+}
+
+.inbox .inbox-num{
+    margin-bottom: auto;
+    margin-top: auto;
+    background-color: red;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    display: none;
+}
+
+.inbox .inbox-num p{
+    margin:auto;
+    text-align: center;
+    font-size: 13px;
+}

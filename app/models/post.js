@@ -10,6 +10,15 @@ const insertPost = async(data) => {
     })
 }
 
+const updatePost = async(id, data) => {
+    return await prisma.post.updateMany({
+        where: {
+            id: id
+        },
+        data: data
+    })
+}
+
 const getPostApprovedByUser = async(id) => {
     return await prisma.post.findMany({
         where: {
@@ -19,4 +28,13 @@ const getPostApprovedByUser = async(id) => {
     })
 }
 
-module.exports = {insertPost, getPostApprovedByUser};
+const getPostsNotViwedByUser = async(id) => {
+    return await prisma.post.findMany({
+        where:{
+            viewed: false,
+            receiverId: id
+        }
+    })
+}
+
+module.exports = {insertPost, updatePost, getPostApprovedByUser, getPostsNotViwedByUser};
