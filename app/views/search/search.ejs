@@ -12,17 +12,8 @@
 
 <body>
     <% if(user) { %>
-        <div class="sidebar">
-            <ul>
-                <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">Página Inicial</a></li>
-                <li><i class="fa fa-search" aria-hidden="true"></i><a href="/search">Pesquisar</a></li>
-                <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="#">Caixa de Entrada</a></li>
-                <li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a
-                        href="<%= helpers.baseUrl(`perfil/${user.username}`)%>">Perfil</a></li>
-                <li><i class="fa fa-sign-out" aria-hidden="true"></i></i><a href="/logout">Sair</a></li>
-            </ul>
-        </div>
-        <% } %>
+        <%- include(`../components/menu`) %>
+    <% } %>
         <div class="content">
             <h1>Pesquisar</h1>
             <form action="<%= helpers.baseUrl(`search`)%>" method="GET">

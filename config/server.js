@@ -14,10 +14,23 @@ app.use(express.static(__dirname + '/../public'));
 const helpersDirectory = path.join(__dirname, '/../app/helpers');
 const helperFiles = fs.readdirSync(helpersDirectory);
 
-for (const file of helperFiles) {
-  const helperModule = require(path.join(helpersDirectory, file));
-  app.locals['helpers'] = helperModule;
-}
+const helpers = {};
+
+fs.readdirSync(__dirname + '/../app/helpers').forEach(file => {
+  if (path.extname(file) === '.js') {
+    const helperFile = require(path.join(__dirname, '/../app/helpers', file));
+
+    if (typeof helperFile === 'object' && helperFile !== null) {
+      for (const key in helperFile) {
+        if (typeof helperFile[key] === 'function') {
+          helpers[key] = helperFile[key];
+        }
+      }
+    }
+  }
+});
+
+app.locals.helpers = helpers;
 
 
 app.use(express.json());

@@ -47,8 +47,9 @@ model Post{
   receiver User @relation("Receiver", fields:[receiverId], references: [id])
   receiverId Int
   textCreator String
-  textReceiver String
-  approved Boolean
+  textReceiver String? 
+  approved Boolean @default(false)
+  viewed Boolean @default(false)
   createdOn DateTime @default(now())
 
   @@map("posts")

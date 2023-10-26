@@ -10,15 +10,7 @@
 </head>
 <body>
     <% if(user) { %>
-    <div class="sidebar">
-        <ul>
-            <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">Página Inicial</a></li>
-            <li><i class="fa fa-search" aria-hidden="true"></i><a href="/search">Pesquisar</a></li>
-            <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="#">Caixa de Entrada</a></li>
-            <li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="<%= helpers.baseUrl(`perfil/${user.username}`)%>">Perfil</a></li>
-            <li><i class="fa fa-sign-out" aria-hidden="true"></i></i><a href="/logout">Sair</a></li>
-        </ul>
-    </div>
+        <%- include(`../components/menu`) %>
     <% } %>
     <div class="content">
         <div class="perfil-header">
@@ -42,7 +34,29 @@
             </div>
         </div>
         <hr>
-        <p>Nenhum post encontrado</p>
+        <div class="post-data">
+            <% if(user && perfil.id != user.id) { %>
+                <div class="post-area">
+                    <form action="/post" method="post">
+                        <div class="post-input">
+                            <img src="<%= user.picture%>" alt="">
+                            <input type="text" name="textCreator" placeholder="Faça um depoimento para <%=perfil.name%>">
+                        </div>
+                        <hr>
+                        <button type="submit">
+                            Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></i>
+                        </button>
+                        <input type="hidden" name="creatorId" value="<%= user.id %>">
+                        <input type="hidden" name="receiverId" value="<%= perfil.id %>">
+                    </form>
+                </div>
+            <% } %>
+            <% if(posts && posts.length > 0){ %>
+            
+            <% } else { %> 
+                <p style="text-align: center; color: #757575">Nenhum post encontrado.</p>
+            <% } %>
+        </div>
     </div>
     <div style="display: none;" class="followers_table" id="followers">
         <div style="display: flex;">

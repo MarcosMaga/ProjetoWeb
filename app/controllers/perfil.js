@@ -1,4 +1,5 @@
 const usersModel = require('../models/users');
+const postsModel = require('../models/post');
 const logger = require('../../config/logger');
 const sharp = require('sharp');
 const {PrismaClient} = require('@prisma/client');
@@ -8,7 +9,15 @@ const perfil = (req, res) => {
     usersModel.getUserByUsername(req.params.id)
         .then((user) => {
             if(user){
-                res.render('perfil/perfil.ejs', {user: req.session.user, perfil: user});
+                postsModel.getPostApprovedByUser(user.id)
+                    .then((posts) => {
+                        res.render('perfil/perfil.ejs', {user: req.session.user, perfil: user, posts: posts});
+                    }).catch((error) => {
+                        logger.error(`Erro ao achar post de @${user.username}. Código: ${error.code}`);
+                        res.render('perfil/perfil.ejs', {user: req.session.user, perfil: user, posts: null});
+                    }).finally(async () => {
+                        await prisma.$disconnect();
+                    })
             }else{
                 res.render('errors/404.ejs', {error: "Perfil não encontrado :/"});
             }

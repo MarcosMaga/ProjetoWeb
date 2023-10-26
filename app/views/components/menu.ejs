@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/menu.css">
+<div class="sidebar">
+    <ul>
+        <li><i class="fa fa-home" aria-hidden="true"></i><a href="#">Página Inicial</a></li>
+        <li><i class="fa fa-search" aria-hidden="true"></i><a href="/search">Pesquisar</a></li>
+        <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="#">Caixa de Entrada</a></li>
+        <li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a href="<%= helpers.baseUrl(`perfil/${user.username}`)%>">Perfil</a></li>
+        <li><i class="fa fa-sign-out" aria-hidden="true"></i></i><a href="/logout">Sair</a></li>
+    </ul>
+</div>

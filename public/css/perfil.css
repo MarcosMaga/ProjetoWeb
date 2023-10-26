@@ -84,6 +84,69 @@
     margin: 10px
 }
 
+.post-data{
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.post-area{
+    background-color: #393939;
+    display: flex;
+    margin: 10px;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.post-area form{
+    width: 100%;
+}
+
+.post-area img{
+    width: 7%;
+    border-radius: 50%;
+    margin: 10px
+}
+
+.post-area .post-input{
+    display: flex;
+    width: 100%;
+}
+
+.post-area .post-input input{
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 15px;
+    border: none;
+    background-color: #202020;
+    padding: 10px;
+    width: 85%;
+    color: white;
+}
+
+.post-area hr{
+    border-color: #202020;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.post-area button{
+    margin: 5px;
+    margin-left: 10px;
+    width: auto;
+    padding: 10px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.post-area button:hover{
+    background-color: #202020;
+}
+
 hr{
     border-color: #393939;
     margin: 5px;
