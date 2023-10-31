@@ -20,7 +20,7 @@ const create = (req, res) => {
 const news = (req, res) => {
     postsModel.getPostsNotViwedByUser(req.session.user.id)
         .then((posts) => {
-            if(posts.length > 0)
+            if (posts.length > 0)
                 res.status(200).send(posts);
         }).catch((error) => {
             logger.error(`Erro ao achar Post não vistos do usuário ${req.session.user.id}. Código: ${error.code}`);
@@ -30,4 +30,30 @@ const news = (req, res) => {
         })
 }
 
-module.exports = {create, news};
+const del = (req, res) => {
+    const { id } = req.params;
+
+    postsModel.getPostById(parseInt(id))
+        .then((post) => {
+            if(post.creatorId == req.session.user.id || post.receiverId == req.session.user.id){
+                    postsModel.deletePost(parseInt(id))
+                        .then((posts) => {
+                            res.redirect(req.get('Referer'));
+                        }).catch((error) => {
+                            logger.error(`Erro ao deletar Post com o ID ${id}. Código: ${error.code}`);
+                            res.status(500).send(error);
+                        }).finally(async () => {
+                            await prisma.$disconnect();
+                        })
+            }else{
+                logger.info(`Usuário @${req.session.user.username} tentou violar acesso na rota 'post/delete'`);
+                res.redirect('/logout');
+            }
+        }).catch((error) => {
+            logger.error(`Erro ao encontrar Post com o ID ${id}`)
+        }).finally(async () => {
+            await prisma.$disconnect();
+        })
+}
+
+module.exports = { create, news, del };

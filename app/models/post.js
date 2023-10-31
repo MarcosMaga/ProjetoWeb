@@ -19,6 +19,22 @@ const updatePost = async(id, data) => {
     })
 }
 
+const deletePost = async(id) => {
+    return await prisma.post.delete({
+        where: {
+            id: id
+        }
+    })
+}
+
+const getPostById = async(id) => {
+    return await prisma.post.findUnique({
+        where: {
+            id: id
+        }
+    })
+}
+
 const getPostApprovedByUser = async(id) => {
     return await prisma.post.findMany({
         where: {
@@ -49,4 +65,4 @@ const getPostsNotViwedByUser = async(id) => {
     })
 }
 
-module.exports = {insertPost, updatePost, getPostApprovedByUser, getPostsNotApprovedByUser, getPostsNotViwedByUser};
+module.exports = {insertPost, updatePost, deletePost, getPostById,getPostApprovedByUser, getPostsNotApprovedByUser, getPostsNotViwedByUser};

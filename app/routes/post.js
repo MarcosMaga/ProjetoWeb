@@ -6,6 +6,9 @@ module.exports = {
         app.post('/post', userLogger, (req, res) => {
             postsController.create(req, res);
         }),
+        app.get('/post/delete/:id', userLogger, (req, res) => {
+            postsController.del(req, res);
+        }),
         app.get('/post/news', userLogger, (req, res) => {
             postsController.news(req, res);
         })
