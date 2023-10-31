@@ -1,0 +1,93 @@
+.content-wrapper{
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.post-area{
+    background-color: #393939;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}
+
+.post-area .post-info{
+    display: flex;
+}
+
+.post-area .post-info h2{
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.post-area .post-info p{
+    color: white;
+    margin-bottom: auto;
+    margin-left: auto;
+}
+
+.post-area .post-info a{
+    color: white;
+    margin: 10px;
+    margin-left: 5px;
+    font-size: 18px;
+}
+
+.post-area img{
+    width: 7%;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.post-area p{
+    margin: 0;
+    color: white;
+    padding: 10px;
+}
+
+.post-area input{
+    display: flex;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+    background-color: #202020;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.post-area form a{
+    margin: 5px;
+    width: auto;
+    padding: 10px;
+    color: white;
+    font-size: medium;
+    font-weight: bold;
+    border-radius: 20px;
+    text-decoration: none;
+}
+
+.post-area form a:hover{
+    background-color: #202020;
+}
+
+.post-area button{
+    margin: 5px;
+    margin-left: 5%;
+    width: auto;
+    padding: 10px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.post-area button:hover{
+    background-color: #202020;
+}
