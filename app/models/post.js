@@ -40,6 +40,13 @@ const getPostApprovedByUser = async(id) => {
         where: {
             approved: true,
             receiverId: id
+        },
+        orderBy:{
+            createdOn: 'desc'
+        },
+        include:{
+            creator: true,
+            receiver: true
         }
     })
 }

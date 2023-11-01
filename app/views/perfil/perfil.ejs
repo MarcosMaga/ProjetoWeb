@@ -11,6 +11,12 @@
 <body>
     <% if(user) { %>
         <%- include(`../components/menu`) %>
+    <% } else { %>     
+        <div class="sidebar">
+            <h2 style="color: white; margin: 10px;">Entre na comunidade</h2>
+            <p style="color: white; margin: 10px; margin-bottom: 20px;">Quer interagir com <strong><%=perfil.username%></strong>? Crie uma conta em nossa comunidade ou faça login para enviar e interagir com os depoimentos.</p>
+            <a style="margin: 10px; background-color: #121212; padding: 8px; border-radius: 10px;" href="/login"><strong>Vamos lá</strong></a>
+        </div>
     <% } %>
     <div class="content">
         <div class="perfil-header">
@@ -28,6 +34,7 @@
                   <h3><%= perfil.name%></h3>
                   <p><%= perfil.bio%></p>
                   <div class="follow_data">
+                    <p><strong><%= posts.length%></strong> depoimentos</p>
                     <p onclick="openFollowers()" id="followers_count"><strong><%= perfil.followers.length %></strong> seguidores</p>
                     <p onclick="openFollowings()"><strong><%= perfil.followings.length %></strong> seguindo</p>
                   </div>
@@ -51,9 +58,56 @@
                     </form>
                 </div>
             <% } %>
-            <% if(posts && posts.length > 0){ %>
-            
-            <% } else { %> 
+            <% if(posts && posts.length > 0){ 
+                posts.forEach(post => { %>
+                    <div class="post-division">
+                        <p>De <a href="/perfil/<%=post.creator.username%>"><%=post.creator.username%></a> para <a href="/perfil/<%=post.receiver.username%>"><%=post.receiver.username%></a></p>
+                        <div class="post-content">
+                        <% if(post.textReceiver) { %>
+                            <div class="post-content-receiver">
+                                <img src="<%=perfil.picture%>">
+                                <a href="/perfil/<%=perfil.username%>"><%=perfil.name%></a>
+                                <div class="post-name">
+                                    <p>@<%=perfil.username%> </p>
+                                    <p>•</p>
+                                    <p><%=helpers.compareTime(post.createdOn)%></p>
+                                </div>
+                            </div>
+                            <p class="text-receiver"><%= post.textReceiver %></p>
+                            <div class="post-creator">
+                                <div class="post-creator-info">
+                                    <img src="<%=post.creator.picture%>">
+                                    <p><a href="/perfil/<%=post.creator.username%>"><%=post.creator.name%></a></p>    
+                                    <p style="margin-left:5px; color:#1d1d1d;">@<%=post.creator.username%></p>
+                                </div>
+                                <p class="text-creator"><%= post.textCreator %></p>
+                            </div>
+                            <hr>
+                            <div class="actions">
+                                <button>Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                                <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                            </div>
+                        <% } else { %>
+                            <div class="post-content-receiver">
+                                <img src="<%=post.creator.picture%>">
+                                <a href="/perfil/<%=post.creator.username%>"><%=perfil.name%></a>
+                                <div class="post-name">
+                                    <p>@<%=post.creator.username%> </p>
+                                    <p>•</p>
+                                    <p><%=helpers.compareTime(post.createdOn)%></p>
+                                </div>
+                            </div>
+                            <p style="margin-bottom: 10px;" class="text-receiver"><%= post.textCreator %></p>
+                            <hr>
+                            <div class="actions">
+                                <button>Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                                <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                            </div>
+                        <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>  
                 <p style="text-align: center; color: #757575">Nenhum post encontrado.</p>
             <% } %>
         </div>

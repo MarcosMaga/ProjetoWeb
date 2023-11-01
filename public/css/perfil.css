@@ -92,7 +92,7 @@
 .post-area{
     background-color: #393939;
     display: flex;
-    margin: 10px;
+    margin-top: 10px;
     border-radius: 20px;
     width: 100%;
 }
@@ -147,7 +147,102 @@
     background-color: #202020;
 }
 
-hr{
-    border-color: #393939;
-    margin: 5px;
+.post-division p{
+    color: white;
 }
+
+.post-division hr{
+    border-color: #202020;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.post-division a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.post-content-receiver a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.post-division .post-content{
+    background-color: #393939;
+    border-radius: 20px;
+}
+
+.post-division .post-content .post-content-receiver, .post-name{
+    display: flex;
+}
+
+.post-division .post-content .post-content-receiver .post-name p{
+    color: #202020;
+    margin-left: 5px;
+    margin-right: 1px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.text-receiver{
+    margin: 0;
+    margin-left: 10px;
+}
+
+.post-creator{
+    border: 1px solid #202020;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 10px;
+}
+
+.actions{
+    display: flex;
+}
+
+.actions button{
+    margin: 5px;
+    margin-left: 10px;
+    width: auto;
+    padding: 10px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: bold;   
+}
+
+.actions button:hover{
+    background-color: #202020;
+}
+
+.text-creator{
+    margin: 0;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.post-creator .post-creator-info{
+    display: flex;
+}
+
+.post-division .post-content .post-content-receiver img{
+    width: 7%;
+    border-radius: 50%;
+    margin: 10px
+}
+
+.post-creator-info img{
+    width: 5%;
+    border-radius: 50%;
+    margin: 10px
+}
+
