@@ -12,5 +12,8 @@ module.exports = {
         app.get('/post/news', userLogger, (req, res) => {
             postsController.news(req, res);
         })
+        app.post('/post/approved/:id', userLogger, (req, res) => {
+            postsController.approved(req, res);
+        })
     }
 }

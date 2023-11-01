@@ -26,7 +26,7 @@
                             <p><%= helpers.compareTime(post.createdOn) %></p>
                         </div>
                         <p><%= post.textCreator %></p>
-                        <form action="/post" method="PATCH">
+                        <form action="/post/approved/<%= post.id%>" method="post">
                             <input type="text" name="textReceiver" placeholder="Escreva um comentário">
                             <hr>
                             <button type="submit">

@@ -56,4 +56,31 @@ const del = (req, res) => {
         })
 }
 
-module.exports = { create, news, del };
+const approved = (req, res) => {
+    const id = parseInt(req.params.id);
+    let data = req.body;
+    data.approved = true;
+
+    postsModel.getPostById(parseInt(id))
+        .then((post) => {
+            if(post.creatorId == req.session.user.id || post.receiverId == req.session.user.id){
+                postsModel.updatePost(id, data)
+                    .then((p) => {
+                        res.redirect(req.get('Referer'));
+                    }).catch((error) => {
+                        logger.error(`Erro ao aprovar e atualizar o Post com ID ${post.id}`);
+                    }).finally(async () => {
+                        await prisma.$disconnect();
+                    })
+            }else{
+                logger.info(`Usuário @${req.session.user.username} tentou violar acesso na rota 'post/update'`);
+                res.redirect('/logout');
+            }
+        }).catch((error) => {
+            logger.error(`Erro ao encontrar Post com o ID ${id}`)
+        }).finally(async () => {
+            await prisma.$disconnect();
+        })
+}
+
+module.exports = { create, news, del, approved };
