@@ -72,7 +72,7 @@
                                     <p>•</p>
                                     <p><%=helpers.compareTime(post.createdOn)%></p>
                                 </div>
-                                <% if(user.id == post.creatorId || user.id == post.receiverId) { %>
+                                <% if(user && (user.id == post.creatorId || user.id == post.receiverId)) { %>
                                     <a class="delete-post" href="/post/delete/<%=post.id%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 <% } %>
                             </div>
@@ -85,11 +85,18 @@
                                 </div>
                                 <p class="text-creator"><%= post.textCreator %></p>
                             </div>
-                            <hr>
-                            <div class="actions">
-                                <button>Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
-                                <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
-                            </div>
+                            <p style="margin-left: 10px"><strong><%= post.likes.length %></strong> curtidas</p>
+                            <% if(user) { %>
+                                <hr>
+                                <div class="actions">
+                                    <% if(helpers.isLiked(`${user.id}-${post.id}`) == true) { %>
+                                        <button>Descurtir <i class="fa fa-heart" aria-hidden="true"></i></button>
+                                    <% }else { %>
+                                        <button>Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                                    <% } %>
+                                    <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                                </div>
+                            <% } %>
                         <% } else { %>
                             <div class="post-content-receiver">
                                 <img src="<%=post.creator.picture%>">
@@ -99,16 +106,23 @@
                                     <p>•</p>
                                     <p><%=helpers.compareTime(post.createdOn)%></p>
                                 </div>
-                                <% if(user.id == post.creatorId || user.id == post.receiverId) { %>
+                                <% if(user && (user.id == post.creatorId || user.id == post.receiverId)) { %>
                                     <a class="delete-post" href="/post/delete/<%=post.id%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 <% } %>
                             </div>
                             <p style="margin-bottom: 10px;" class="text-receiver"><%= post.textCreator %></p>
-                            <hr>
-                            <div class="actions">
-                                <button>Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
-                                <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
-                            </div>
+                            <p style="margin-left: 10px"><strong><%= post.likes.length %></strong> curtidas</p>
+                            <% if(user) { %>
+                                <hr>
+                                <div class="actions">
+                                    <% if(helpers.isLiked(`${user.id}-${post.id}`) == true) { %>
+                                        <button>Descurtir <i class="fa fa-heart" aria-hidden="true"></i></button>
+                                    <% }else { %>
+                                        <button>Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                                    <% } %>
+                                    <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                                </div>
+                            <% } %>
                         <% } %>
                         </div>
                     </div>

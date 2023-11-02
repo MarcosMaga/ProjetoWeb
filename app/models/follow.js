@@ -16,7 +16,7 @@ const deleteFollow = async(id) => {
                 followingId: followingId
             }
         }
-    })
+    });
 }
 
 const getFollowById = async(id) => {

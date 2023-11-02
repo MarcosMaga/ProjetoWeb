@@ -46,7 +46,8 @@ const getPostApprovedByUser = async(id) => {
         },
         include:{
             creator: true,
-            receiver: true
+            receiver: true,
+            likes: true
         }
     })
 }
