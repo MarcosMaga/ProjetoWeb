@@ -246,3 +246,12 @@
     margin: 10px
 }
 
+.delete-post{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: medium;
+    margin-left: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+}
