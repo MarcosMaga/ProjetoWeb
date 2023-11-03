@@ -1,4 +1,5 @@
 const postsModel = require('../models/post');
+const likesModel = require('../models/like');
 const logger = require('../../config/logger');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -83,4 +84,19 @@ const approved = (req, res) => {
         })
 }
 
-module.exports = { create, news, del, approved };
+const liked = (req, res) => {
+    const id = req.params.id;
+    likesModel.getLikeById(`${req.session.user.id}-${id}`)
+        .then((like) => {
+            if(like)
+                res.status(200).send({isLiked: true}).end();
+            else
+                res.status(200).send({isLiked: false}).end();
+        }).catch((error) => {
+            console.log(error);
+        }).finally(async () => {
+            await prisma.$disconnect();
+        })
+}
+
+module.exports = { create, news, del, approved, liked };

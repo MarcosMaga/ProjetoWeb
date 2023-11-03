@@ -1,4 +1,8 @@
-fetch('/post/news', {
+let notificationsNumber = 0;
+let first = true;
+
+function getNewsPosts() {
+  fetch('/post/news', {
     method: 'GET', // Este é o método padrão, então você pode omiti-lo
     headers: {
       'Content-Type': 'application/json', // Se necessário, ajuste os cabeçalhos
@@ -12,16 +16,27 @@ fetch('/post/news', {
       return response.json();
     })
     .then(data => {
-        if(data.length > 0 && data.length < 10){
-            document.getElementById('in-num').style.display = 'flex';
-            document.getElementById('inbox-number').innerHTML = data.length;
-        }
-        else if(data.length > 10){
-            document.getElementById('in-num').style.display = 'flex';
-            document.getElementById('inbox-number').innerHTML = '9+';
-        }
+      if(data.length > notificationsNumber && !first){
+        var audio = new Audio('/audio/notification.mp3');
+        audio.play();
+      }
+
+      notificationsNumber = data.length;
+      first = false;
+
+      if (data.length > 0 && data.length < 10) {
+        document.getElementById('in-num').style.display = 'flex';
+        document.getElementById('inbox-number').innerHTML = data.length;
+      }
+      else if (data.length > 10) {
+        document.getElementById('in-num').style.display = 'flex';
+        document.getElementById('inbox-number').innerHTML = '9+';
+      }
     })
     .catch(error => {
       console.log(error);
     });
-  
+}
+
+getNewsPosts();
+setInterval(getNewsPosts, 10000);

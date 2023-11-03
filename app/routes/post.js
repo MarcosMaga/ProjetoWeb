@@ -15,5 +15,8 @@ module.exports = {
         app.post('/post/approved/:id', userLogger, (req, res) => {
             postsController.approved(req, res);
         })
+        app.get('/post/liked/:id', userLogger,(req, res) => {
+            postsController.liked(req, res);
+        })
     }
 }
