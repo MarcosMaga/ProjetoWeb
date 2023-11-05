@@ -109,11 +109,12 @@
                                 <% } %>
                             </div>
                             <p style="margin-bottom: 10px;" class="text-receiver"><%= post.textCreator %></p>
-                            <p style="margin-left: 10px"><strong><%= post.likes.length %></strong> curtidas</p>
+                            <p id="count_<%=post.id%>" style="margin-left: 10px"><strong><%= post.likes.length %></strong> curtidas</p>
                             <% if(user) { %>
                                 <hr>
                                 <div class="actions">
-                                    <button>Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                                    <script>isLiked("<%=post.id%>");</script>
+                                    <button id="button_<%=post.id%>" onclick="likeAction(event)">Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
                                     <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
                                 </div>
                             <% } %>

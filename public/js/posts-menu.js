@@ -28,7 +28,7 @@ function getNewsPosts() {
         document.getElementById('in-num').style.display = 'flex';
         document.getElementById('inbox-number').innerHTML = data.length;
       }
-      else if (data.length > 10) {
+      else if (data.length >= 10) {
         document.getElementById('in-num').style.display = 'flex';
         document.getElementById('inbox-number').innerHTML = '9+';
       }
