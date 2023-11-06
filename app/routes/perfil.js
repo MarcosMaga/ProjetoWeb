@@ -12,6 +12,9 @@ module.exports = {
         app.get('/config/perfil', userLogger, (req, res) => {
             perfilController.config(req, res, null);
         })
+        app.get('/perfil/:id/posts', (req, res) => {
+            perfilController.posts(req, res);
+        })
         app.post('/config/perfil', userLogger, userBasicValidator, (req, res) => {
             perfilController.config(req, res, validationResult(req));
         })

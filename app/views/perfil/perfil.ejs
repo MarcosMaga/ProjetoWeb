@@ -42,7 +42,7 @@
             </div>
         </div>
         <hr>
-        <div class="post-data">
+        <div class="post-data" id="post-data">
             <% if(user && perfil.id != user.id) { %>
                 <div class="post-area">
                     <form action="/post" method="post">
@@ -61,7 +61,7 @@
             <% } %>
             <% if(posts && posts.length > 0){ 
                 posts.forEach(post => { %>
-                    <div class="post-division">
+                    <div id="post-division" class="post-division">
                         <p>De <a href="/perfil/<%=post.creator.username%>"><%=post.creator.username%></a> para <a href="/perfil/<%=post.receiver.username%>"><%=post.receiver.username%></a></p>
                         <div class="post-content">
                         <% if(post.textReceiver) { %>
@@ -121,7 +121,8 @@
                         <% } %>
                         </div>
                     </div>
-                <% }) %>
+                    <% }) %>
+                <div id="loading-message" style="display: none;">Carregando mais posts...</div>
             <% } else { %>  
                 <p style="text-align: center; color: #757575">@<%=perfil.username%> não possui nenhuma publicação</p>
             <% } %>
@@ -172,7 +173,7 @@
         if(document.getElementById("followers").style.display == 'block')
             document.getElementById("followers").style.display = 'none';
         else
-            document.getElementById("followers").style.display = 'block'
+        document.getElementById("followers").style.display = 'block'
     }
 
     function openFollowings(){
@@ -180,6 +181,81 @@
             document.getElementById("followings").style.display = 'none';
         else
             document.getElementById("followings").style.display = 'block'
+    }
+    </script>
+<script src="/js/compareTime.js"></script>
+<script>
+    window.addEventListener('scroll', () => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            loadMorePosts();
+        }
+    });
+
+    let currentPage = 1;
+    let loading = false;
+
+    function loadMorePosts() {
+        if (loading) 
+            return;
+        
+        loading = true;
+        const postContainer = document.getElementById('post-data');
+        const loadingMessage = document.getElementById('loading-message');
+
+        loadingMessage.style.display = 'block';
+        const url = `/perfil/<%= perfil.username %>/posts?page=${currentPage + 1}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.posts.length);
+                if(data.posts.length > 0){
+                    currentPage++;
+                    console.log(data.posts.length);
+                    data.posts.forEach(post => {
+                        if(post.textReceiver){
+                            const postDiv = document.createElement('div');
+                            postDiv.className = "post-division";
+                            postDiv.innerHTML = `
+                            <p>De <a href="/perfil/${post.creator.username}">${post.creator.username}</a> para <a href="/perfil/${post.receiver.username}">${post.receiver.username}</a></p>
+                            <div class="post-content">
+                                <div class="post-content-receiver">
+                                    <img src=${post.receiver.picture}>
+                                    <a href="/perfil/${post.receiver.username}">${post.receiver.name}</a>
+                                    <div class="post-name">
+                                        <p>@${post.receiver.username}</p>
+                                        <p>•</p>
+                                        <p>${compareTime(post.createdOn)}</p>
+                                    </div>
+                                    ${data.user && (data.user.id == post.creator.id || post.receiver.id) ? `<a class="delete-post" href="/post/delete/${post.id}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>`: ''}
+                                </div>
+                                <p class="text-receiver">${post.textReceiver}</p>
+                                <div class="post-creator">
+                                    <div class="post-creator-info">
+                                        <img src="${post.creator.picture}">
+                                        <p><a href="/perfil/${post.creator.username}">${post.creator.name}</a></p>    
+                                        <p style="margin-left:5px; color:#1d1d1d;">@${post.creator.username}</p>
+                                    </div>
+                                    <p id="count_${post.id}" style="margin-left: 10px"><strong>${post.likes.length}</strong> curtidas</p>                            
+                            `;
+
+                            if(data.user){ 
+                                isLiked(post.id);
+                                postDiv.innerHTML += `<hr>
+                                    <div class="actions">
+                                        <button id="button_${post.id}" onclick="likeAction(event)">Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                                        <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                                    </div>`
+                            }
+
+                            postDiv.innerHTML += '</div></div>'
+                            postContainer.appendChild(postDiv);
+                        }
+                    })
+                }
+                loadingMessage.style.display = 'none';
+                loading = false;
+            });
     }
 </script>
 </html>

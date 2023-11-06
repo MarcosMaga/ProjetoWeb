@@ -6,10 +6,13 @@ const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const perfil = (req, res) => {
+    const page = req.query.page || 1;
+    const pageSize = 10;
+
     usersModel.getUserByUsername(req.params.id)
         .then((user) => {
             if(user){
-                postsModel.getPostApprovedByUser(user.id)
+                postsModel.getPostApprovedByUser(user.id, page, pageSize)
                     .then((posts) => {
                         res.render('perfil/perfil.ejs', {user: req.session.user, perfil: user, posts: posts});
                     }).catch((error) => {
@@ -26,6 +29,25 @@ const perfil = (req, res) => {
         }).finally(async () => {
             await prisma.$disconnect();
         });
+}
+
+const posts = (req, res) => {
+    const page = req.query.page || 1;
+    const pageSize = 10;
+
+    usersModel.getUserByUsername(req.params.id)
+        .then((user) => {
+            postsModel.getPostApprovedByUser(user.id, page, pageSize)
+                .then((posts) => {
+                    res.status(200).send({user: req.session.user, posts: posts });
+                }).catch((error) => {
+                    logger.error(`Erro ao achar post de @${user.id}. Código: ${error.code}`);
+                    console.log(error);
+                    res.status(400).send(error);
+                }).finally(async () => {
+                    await prisma.$disconnect();
+                })
+        })
 }
 
 const config = (req, res, validatorError) => {
@@ -83,4 +105,4 @@ const picture = async (req, res) => {
     }
 }
 
-module.exports = {perfil, config, picture};
+module.exports = {perfil, posts, config, picture};

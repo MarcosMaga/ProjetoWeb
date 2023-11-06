@@ -11,6 +11,7 @@ function getNewsPosts() {
   })
     .then(response => {
       if (!response.ok) {
+        window.location.reload();
         throw new Error('Erro na solicitação');
       }
       return response.json();

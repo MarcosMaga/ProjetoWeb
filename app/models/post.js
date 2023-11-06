@@ -35,7 +35,7 @@ const getPostById = async(id) => {
     })
 }
 
-const getPostApprovedByUser = async(id) => {
+const getPostApprovedByUser = async(id, page, pageSize) => {
     return await prisma.post.findMany({
         where: {
             approved: true,
@@ -48,7 +48,9 @@ const getPostApprovedByUser = async(id) => {
             creator: true,
             receiver: true,
             likes: true
-        }
+        },
+        skip: (page - 1) * pageSize,
+        take: pageSize
     })
 }
 
