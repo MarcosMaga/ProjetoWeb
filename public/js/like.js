@@ -47,3 +47,37 @@ function likeAction(event){
         console.log(error);
     });
 }
+
+function postInfo(id){
+    fetch(`/post/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na solicitação');
+            }
+            return response.json(); 
+        })
+        .then(data => {
+            const userInfo = document.getElementById('users-list');
+            userInfo.innerHTML = '';
+
+            data.likes.forEach(like => {
+                const info = document.createElement('div');
+                info.className = 'user';
+                info.onclick = () => {
+                    window.location.href = `/perfil/${like.user.username}`;
+                }
+                info.innerHTML = `
+                    <img src="${like.user.picture}">
+                    <div class="user-text">
+                        <p><strong>${like.user.username}</strong></p>
+                        <p>${like.user.name}</p>
+                    </div>
+                `;
+                userInfo.appendChild(info);
+            })
+            
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+}

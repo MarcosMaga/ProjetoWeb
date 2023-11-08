@@ -5,17 +5,30 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const create = (req, res) => {
-    let data = req.body;
-    data.creatorId = parseInt(data.creatorId);
-    data.receiverId = parseInt(data.receiverId);
-    postsModel.insertPost(req.body)
-        .then((post) => {
-            res.redirect(`/perfil/${post.receiver.username}`);
-        }).catch((error) => {
-            logger.error(`Erro ao criar Post de  usuário ${data.creatorId} para usuário ${data.receiverId}. Código: ${error.code}`);
-        }).finally(async () => {
-            await prisma.$disconnect();
-        })
+    if(req.method == 'POST'){
+        let data = req.body;
+        data.creatorId = parseInt(data.creatorId);
+        data.receiverId = parseInt(data.receiverId);
+        postsModel.insertPost(req.body)
+            .then((post) => {
+                res.redirect(`/perfil/${post.receiver.username}`);
+            }).catch((error) => {
+                logger.error(`Erro ao criar Post de  usuário ${data.creatorId} para usuário ${data.receiverId}. Código: ${error.code}`);
+            }).finally(async () => {
+                await prisma.$disconnect();
+            })
+    }else{
+        postsModel.getPostById(parseInt(req.params.id))
+            .then((posts) => {
+                res.status(200).send(posts);
+            }).catch((error) => {
+                logger.error(`Erro ao achar Post ${req.params.id}. Código: ${error.code}`);
+                res.status(400).send(error);
+            }).finally(async () => {
+                await prisma.$disconnect();
+            })
+    }
+    
 }
 
 const news = (req, res) => {
@@ -41,6 +54,7 @@ const del = (req, res) => {
                         .then((posts) => {
                             res.redirect(req.get('Referer'));
                         }).catch((error) => {
+                            console.log(error);
                             logger.error(`Erro ao deletar Post com o ID ${id}. Código: ${error.code}`);
                             res.status(500).send(error);
                         }).finally(async () => {

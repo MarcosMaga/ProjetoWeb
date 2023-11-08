@@ -28,6 +28,8 @@ model User {
 
   postsLiked Like[] @relation("User")
 
+  comments Comment[] @relation("Commentator")
+
   @@map("users")
 }
 
@@ -55,14 +57,26 @@ model Post{
   createdOn DateTime @default(now())
 
   likes Like[] @relation("Post")
+  comments Comment[] @relation("Post")
 
   @@map("posts")
+}
+
+model Comment{
+  id Int @id @default(autoincrement())
+  commentator User @relation("Commentator", fields: [commentatorId], references: [id])
+  commentatorId Int
+  post Post @relation("Post", fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+  createdOn DateTime @default(now())
+
+  @@map("comments")
 }
 
 model Like{
   user User @relation("User", fields: [userId], references: [id])
   userId Int
-  post Post @relation("Post", fields: [postId], references: [id])
+  post Post @relation("Post", fields: [postId], references: [id], onDelete: Cascade)
   postId Int
   @@id([userId, postId])
 

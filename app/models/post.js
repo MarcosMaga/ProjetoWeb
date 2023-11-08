@@ -31,28 +31,50 @@ const getPostById = async(id) => {
     return await prisma.post.findUnique({
         where: {
             id: id
+        },
+        include: {
+            likes: {
+                include: {
+                    user: true
+                }
+            }
+
         }
     })
 }
 
-const getPostApprovedByUser = async(id, page, pageSize) => {
-    return await prisma.post.findMany({
+const getPostApprovedByUser = async (id, page, pageSize) => {
+    const posts = await prisma.post.findMany({
         where: {
             approved: true,
             receiverId: id
         },
-        orderBy:{
+        orderBy: {
             createdOn: 'desc'
         },
-        include:{
+        include: {
             creator: true,
             receiver: true,
             likes: true
         },
         skip: (page - 1) * pageSize,
         take: pageSize
-    })
+    });
+
+    const postCount = await prisma.post.count({
+        where: {
+            receiverId: id,
+            approved: true
+        }
+    });
+
+    posts.count = postCount;
+
+    return posts;
 }
+
+
+
 
 const getPostsNotApprovedByUser = async(id) => {
     return await prisma.post.findMany({

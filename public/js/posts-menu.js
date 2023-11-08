@@ -2,7 +2,7 @@ let notificationsNumber = 0;
 let first = true;
 
 function getNewsPosts() {
-  fetch('/post/news', {
+  fetch('/news/post', {
     method: 'GET', // Este é o método padrão, então você pode omiti-lo
     headers: {
       'Content-Type': 'application/json', // Se necessário, ajuste os cabeçalhos
@@ -37,7 +37,7 @@ function getNewsPosts() {
     .catch(error => {
       console.log(error);
     });
+    setTimeout(getNewsPosts, 10000);
 }
 
 getNewsPosts();
-setInterval(getNewsPosts, 10000);
