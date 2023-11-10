@@ -17,7 +17,11 @@ const getCommentsByPost = async(postId, page, pageSize) => {
         },
         include: {
             commentator: true,
-            post: true
+            post: {
+                select: {
+                    receiverId: true
+                }
+            }
         },
         skip: (page - 1) * pageSize,
         take: pageSize

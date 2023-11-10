@@ -188,6 +188,7 @@
         <hr>
         <div id="comments-list">
         </div>
+        <a onclick="actionMoreComments()" class="load-comments" href="#">Carregar mais comentários</a>
     </div>
     <% } %>
 </body>
@@ -223,8 +224,10 @@
     }
 
     function openComments(post){
-        if(document.getElementById("comments").style.display == 'block')
+        if(document.getElementById("comments").style.display == 'block'){
+            setTarget(0);
             document.getElementById("comments").style.display = 'none';
+        }
         else{
             setTarget(post);
             loadMoreComments(post);

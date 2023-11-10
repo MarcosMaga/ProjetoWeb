@@ -4,6 +4,7 @@ let loading_c = false;
 let currentPage_c = 1;
 
 function setTarget(value) {
+    document.getElementById('comments-list').innerHTML = '';
     target = value;
     block_c = false;
     currentPage_c = 0;
@@ -50,9 +51,9 @@ function createComment() {
             let value = document.getElementById(`comments_${target}`).innerText;
             value = parseInt(value.replace(' comentários', ''));
             document.getElementById(`comments_${target}`).innerHTML = `<strong>${value+1}</strong> comentários`;
+            document.getElementById('textComment').value = '';
             setTarget(target);
             loadMoreComments();
-            document.getElementById('textComment').value = '';
         })
         .catch(error => {
             console.error('Erro durante a requisição:', error);
@@ -73,22 +74,29 @@ function loadMoreComments() {
         .then(data => {
             console.log(data.comments.length);
             if(data.comments.length > 0){
-                commentsContainer.innerHTML = '';
-
                 data.comments.forEach(comment => {
                     commentDiv = document.createElement('div');
                     commentDiv.className = 'comment';
                     commentDiv.innerHTML = `
                         <img src=${comment.commentator.picture}>
                         <div class='back'>
-                            <p>${comment.textComment}</p>
+                            <p><strong>${comment.commentator.name}</strong> • ${compareTime(comment.createdOn)}<br>${comment.textComment}</p>
+                            ${data.user.id == comment.commentatorId || data.user.id == comment.post.receiverId ? `
+                            <a style='margin-left: auto; margin-top: 5px; margin-right: 5px' href='/comment/delete/${comment.id}'><i class="fa fa-trash-o" aria-hidden="true"></i></a>` : ''}
                         </div>
                     `;
                     commentsContainer.appendChild(commentDiv);
                 })
             }else{
+                let load_comments = document.getElementById('load-comments');
+                load_comments.parentNode.removeChild(load_comments);
                 block_c = true;
             }
             loading_c = false;
         });
+}
+
+function actionMoreComments(){
+    currentPage_c ++;
+    loadMoreComments();
 }
