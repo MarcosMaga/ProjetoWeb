@@ -55,7 +55,8 @@ const getPostApprovedByUser = async (id, page, pageSize) => {
         include: {
             creator: true,
             receiver: true,
-            likes: true
+            likes: true,
+            comments: true,
         },
         skip: (page - 1) * pageSize,
         take: pageSize

@@ -246,6 +246,51 @@
     margin: 10px
 }
 
+.info-post-data{
+    display: flex;
+}
+
+.user-comment-form{
+    display: flex;
+}
+
+.user-comment-form img{
+    border-radius: 50%;
+    width: 8%;
+}
+
+.user-comment-form input{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: #393939;
+    padding: 10px;
+    width: 85%;
+    color: white;
+}
+
+.user-comment-form button{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 5px;
+    width: auto;
+    padding: 8px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: bold;
+    display: flex;
+}
+
+.user-comment-form button:hover{
+    background-color: #393939;
+}
+
 .delete-post{
     color: white;
     text-decoration: none;

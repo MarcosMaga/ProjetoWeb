@@ -52,7 +52,7 @@
                         </div>
                         <hr>
                         <button type="submit">
-                            Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></i>
+                            Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i>
                         </button>
                         <input type="hidden" name="creatorId" value="<%= user.id %>">
                         <input type="hidden" name="receiverId" value="<%= perfil.id %>">
@@ -86,13 +86,16 @@
                                 </div>
                                 <p class="text-creator"><%= post.textCreator %></p>
                             </div>
-                            <p onclick="openLikes('<%= post.id %>')" id="count_<%=post.id%>" style="margin-left: 10px; cursor: pointer;"><strong><%= post.likes.length %></strong> curtidas</p>
+                            <div class="info-post-data">
+                                <p onclick="openLikes('<%= post.id %>')" id="count_<%=post.id%>" style="margin-left: 10px; cursor: pointer;"><strong><%= post.likes.length %></strong> curtidas</p>
+                                <p id="comments_<%=post.id%>" style="margin-left: 10px; cursor: pointer;"><strong><%= post.comments.length %></strong> comentários</p>
+                            </div>
                             <% if(user) { %>
                                 <hr>
                                 <div class="actions">
                                     <script>isLiked("<%=post.id%>");</script>
                                     <button id="button_<%=post.id%>" onclick="likeAction(event)">Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
-                                    <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                                    <button onclick="openComments('<%=post.id%>')">Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
                                 </div>
                             <% } %>
                         <% } else { %>
@@ -109,13 +112,16 @@
                                 <% } %>
                             </div>
                             <p style="margin-bottom: 10px;" class="text-receiver"><%= post.textCreator %></p>
-                            <p onclick="openLikes('<%= post.id %>')" id="count_<%=post.id%>" style="margin-left: 10px; cursor: pointer;"><strong><%= post.likes.length %></strong> curtidas</p>
+                            <div class="info-post-data">
+                                <p onclick="openLikes('<%= post.id %>')" id="count_<%=post.id%>" style="margin-left: 10px; cursor: pointer;"><strong><%= post.likes.length %></strong> curtidas</p>
+                                <p id="comments_<%=post.id%>" style="margin-left: 10px; cursor: pointer;"><strong><%= post.comments.length %></strong> comentários</p>
+                            </div>
                             <% if(user) { %>
                                 <hr>
                                 <div class="actions">
                                     <script>isLiked("<%=post.id%>");</script>
                                     <button id="button_<%=post.id%>" onclick="likeAction(event)">Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
-                                    <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                                    <button onclick="openComments('<%=post.id%>')">Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
                                 </div>
                             <% } %>
                         <% } %>
@@ -168,6 +174,22 @@
             </div>
         <% }) %>
     </div>
+    <% if(user) { %>
+    <div style="display: none;" class="followers_table" id="comments">
+        <div style="display: flex;">
+            <h2 style="text-align: left;">Comentários</h2>
+            <h2 onclick="openComments()" style="margin-left: auto; cursor: pointer;">X</h2>
+        </div>
+        <div class="user-comment-form">
+            <img src="<%= user.picture %>" alt="">
+            <input type="text" id="textComment" placeholder="Digite seu comentário">
+            <button id="send-comment">Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </div>
+        <hr>
+        <div id="users-list">
+        </div>
+    </div>
+    <% } %>
 </body>
 <% if(user && perfil.id != user.id) { %>
     <script src="/js/follow.js"></script>
@@ -192,12 +214,20 @@
     }
 
     function openLikes(post){
-        console.log('post teste: ', post);
         if(document.getElementById("likes").style.display == 'block')
             document.getElementById("likes").style.display = 'none';
         else{
             postInfo(post);
             document.getElementById("likes").style.display = 'block'
+        }
+    }
+
+    function openComments(post){
+        if(document.getElementById("comments").style.display == 'block')
+            document.getElementById("comments").style.display = 'none';
+        else{
+            setTarget(post);
+            document.getElementById("comments").style.display = 'block'
         }
     }
     </script>
@@ -255,15 +285,17 @@
                                     </div>
                                     <p class="text-creator">${post.textCreator}</p>
                                 </div>
-                                <p onclick="openLikes('${post.id}')" id="count_${post.id}" style="margin-left: 10px; cursor: pointer"><strong>${post.likes.length}</strong> curtidas</p>                          
-                            `;
+                                <div class="info-post-data">
+                                    <p style="margin-bottom: 10px;" class="text-receiver">${post.textCreator}</p>
+                                    <p onclick="openLikes('${post.id}')" id="count_${post.id}" style="margin-left: 10px; cursor: pointer"><strong>0</strong> curtidas</p><p id="comments_${post.id}" style="margin-left: 10px; cursor: pointer;"><strong>${post.comments.length}</strong> comentários</p>
+                                </div>`;
 
                             if(data.user){ 
                                 isLiked(post.id);
                                 html += `<hr>
                                     <div class="actions">
                                         <button id="button_${post.id}" onclick="likeAction(event)">Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
-                                        <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                                        <button onclick="openComments('${post.id}')">Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
                                     </div>`
                             }
 
@@ -287,15 +319,17 @@
                                 </div>
                                 <a class="delete-post" href="/post/delete/${post.id}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                             </div>
-                            <p style="margin-bottom: 10px;" class="text-receiver">${post.textCreator}</p>
-                            <p onclick="openLikes('${post.id}')" id="count_${post.id}" style="margin-left: 10px; cursor: pointer"><strong>0</strong> curtidas</p>`;
+                            <div class="info-post-data">
+                                <p style="margin-bottom: 10px;" class="text-receiver">${post.textCreator}</p>
+                                <p onclick="openLikes('${post.id}')" id="count_${post.id}" style="margin-left: 10px; cursor: pointer"><strong>0</strong> curtidas</p><p id="comments_${post.id}" style="margin-left: 10px; cursor: pointer;"><strong>${post.comments.length}</strong> comentários</p>
+                            </div>`;
 
                             if(data.user){ 
                                 isLiked(post.id);
                                 html += `<hr>
                                     <div class="actions">
                                         <button id="button_${post.id}" onclick="likeAction(event)">Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
-                                        <button>Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                                        <button onclick="openComments('${post.id}')">Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
                                     </div>`
                             }
 
@@ -311,4 +345,5 @@
             });
     }
 </script>
+<script src="/js/comments.js"></script>
 </html>

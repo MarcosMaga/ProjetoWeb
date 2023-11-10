@@ -68,6 +68,7 @@ model Comment{
   commentatorId Int
   post Post @relation("Post", fields: [postId], references: [id], onDelete: Cascade)
   postId Int
+  textComment String
   createdOn DateTime @default(now())
 
   @@map("comments")
