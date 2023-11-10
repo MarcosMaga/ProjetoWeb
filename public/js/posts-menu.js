@@ -37,7 +37,6 @@ function getNewsPosts() {
     .catch(error => {
       console.log(error);
     });
-    setTimeout(getNewsPosts, 10000);
 }
 
 getNewsPosts();

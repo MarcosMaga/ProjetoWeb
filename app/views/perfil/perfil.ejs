@@ -186,7 +186,7 @@
             <button id="send-comment">Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
         </div>
         <hr>
-        <div id="users-list">
+        <div id="comments-list">
         </div>
     </div>
     <% } %>
@@ -227,6 +227,7 @@
             document.getElementById("comments").style.display = 'none';
         else{
             setTarget(post);
+            loadMoreComments(post);
             document.getElementById("comments").style.display = 'block'
         }
     }

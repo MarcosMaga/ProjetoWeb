@@ -291,6 +291,31 @@
     background-color: #393939;
 }
 
+.comment{
+    display: flex;
+    width: auto;
+    margin: 15px;
+}
+
+.comment img{
+    width: 8%;
+    border-radius: 50%;
+    margin: 15px;
+    margin-bottom: auto;
+}
+
+.comment .back{
+    background-color: #393939;
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.comment p{
+    color: white;
+    margin: 10px;
+}
+
 .delete-post{
     color: white;
     text-decoration: none;

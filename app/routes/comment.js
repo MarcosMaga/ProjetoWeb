@@ -6,5 +6,8 @@ module.exports = {
         app.post('/comment', userLogger, (req, res) => {
             commentsController.action(req, res);
         })
+        app.get('/comment/:id', userLogger, (req, res) => {
+            commentsController.action(req, res);
+        })
     }
 }
