@@ -7,6 +7,29 @@ const insertComment = async(data) => {
     })
 }
 
+const deleteComment = async(id) => {
+    return await prisma.comment.delete({
+        where: {
+            id: parseInt(id)
+        }
+    })
+}
+
+const getCommentById = async(id) => {
+    return await prisma.comment.findUnique({
+        where: {
+            id: parseInt(id)
+        },
+        include: {
+            post: {
+                select: {
+                    receiverId: true
+                }
+            }
+        }
+    })
+}
+
 const getCommentsByPost = async(postId, page, pageSize) => {
     return await prisma.comment.findMany({
         where: {
@@ -27,4 +50,5 @@ const getCommentsByPost = async(postId, page, pageSize) => {
         take: pageSize
     })
 }
-module.exports = {insertComment, getCommentsByPost};
+
+module.exports = {insertComment, deleteComment, getCommentById, getCommentsByPost};

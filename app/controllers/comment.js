@@ -1,4 +1,5 @@
 const commentsModel = require('../models/comment');
+const logger = require('../../config/logger');
 const {PrismaClient} = require('@prisma/client');
 const comment = require('../routes/comment');
 const prisma = new PrismaClient();
@@ -33,4 +34,28 @@ const action = (req, res) => {
     }
 }
 
-module.exports = {action};
+const del = (req, res) => {
+    commentsModel.getCommentById(req.params.id)
+        .then((comment) => {
+            if(comment.commentatorId == req.session.user.id || comment.post.receiverId == req.session.user.id){
+                commentsModel.deleteComment(req.params.id)
+                    .then(() => {
+                        res.redirect(req.get('Referer'));
+                    }).catch((error) => {
+                        logger.error(`Erro ao deletar comentário de ID ${comment.id}. Código: ${error.code}`)
+                    }).finally(async () => {
+                        await prisma.$disconnect();
+                    })
+            }else{
+                logger.error(`Usuário @${req.session.user.username} tentou violar rota 'comment/delete'`);
+                res.redirect('/logout');
+            }
+        }).catch((error) => {
+            logger.error(`Erro ao achar comentário de ID ${req.params.id}. Código: ${error.code}`)
+            res.status(400).send(error);
+        }).finally(async () => {
+            await prisma.$disconnect();
+        })
+}
+
+module.exports = {action, del};

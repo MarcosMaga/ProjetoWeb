@@ -9,5 +9,8 @@ module.exports = {
         app.get('/comment/:id', userLogger, (req, res) => {
             commentsController.action(req, res);
         })
+        app.get('/comment/delete/:id', userLogger, (req, res) => {
+            commentsController.del(req, res);
+        })
     }
 }

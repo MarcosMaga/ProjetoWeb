@@ -20,6 +20,7 @@ h1{
 }
 
 .sidebar{
+    display: block;
     width: 250px;
     height: 100%;
     position: fixed;
@@ -28,6 +29,63 @@ h1{
     overflow-y: auto;
     background-color: #202020;
     border-right: 1px solid #393939;
+}
+
+.sidebar-m{
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #202020;
+    color: white;
+}
+
+.sidebar-m ul{
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sidebar-m li{
+    color: white;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.sidebar-m li:hover {
+    background-color: #393939;
+}
+
+.sidebar-m a {
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar-m i{
+    margin: 5px;
+}
+
+.content{
+    margin-left: 250px;
+}
+
+@media (max-width: 700px) {
+    .sidebar{
+        display: none;
+        background-color: red;
+    }
+
+    .content{
+        margin-left: 0px;
+    }
+
+    .sidebar-m{
+        display: flex;
+    }
 }
 
 .sidebar ul {
@@ -52,10 +110,6 @@ h1{
 
 .sidebar i{
     margin: 5px;
-}
-
-.content{
-    margin-left: 250px;
 }
 
 .inbox{
