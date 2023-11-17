@@ -1,0 +1,65 @@
+.feed-post{
+    background-color: #393939;
+    border-radius: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.feed-post hr{
+    border-color: #202020;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.feed-post img{
+    width: 7%;
+    border-radius: 50%;
+    margin: 10px
+}
+
+.feed-post .post-inputs{
+    display: flex;
+}
+
+.feed-post .post-inputs input{
+    width: 85%;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 15px;
+    border: none;
+    background-color: #202020;
+    padding: 10px;
+    color: white;
+}
+
+.feed-post button{
+    margin: 5px;
+    margin-left: 10px;
+    width: auto;
+    padding: 10px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.feed-post button:hover{
+    background-color: #202020;
+}
+
+.feed-post label{
+    color: white;
+}
+
+.feed-post select{
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 15px;
+    border: none;
+    background-color: #202020;
+    padding: 10px;
+    color: white;
+}

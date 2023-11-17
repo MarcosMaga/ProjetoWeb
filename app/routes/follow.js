@@ -1,12 +1,12 @@
 const followController = require('../controllers/follow');
-const userLogger = require('../middlewares/logged');
+const userLogged = require('../middlewares/logged');
 
 module.exports = {
     follow: (app) => {
-        app.post('/follow', userLogger,(req, res) => {
+        app.post('/follow', userLogged,(req, res) => {
             followController.action(req, res);
         })
-        app.get('/follow/:id', userLogger, (req, res) => {
+        app.get('/follow/:id', userLogged, (req, res) => {
             followController.action(req, res);
         })
     }

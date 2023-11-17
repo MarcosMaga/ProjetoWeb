@@ -74,8 +74,108 @@ const getPostApprovedByUser = async (id, page, pageSize) => {
     return posts;
 }
 
+const getPostToFeedUser = async(userId, page, pageSize) => {
+    const followingUser = await prisma.follow.findMany({
+        where: {
+            followerId: userId
+        }
+    })
 
+    const postByFollowed = await prisma.post.findMany({
+        where: {
+            OR: [
+                {creatorId: {in: followingUser.map(following => following.followingId)}},
+                {receiverId: {in: followingUser.map(following => following.followingId)}}
+            ],
+            AND: [
+                {approved: true}
+            ]
+        },
+        orderBy: {
+            createdOn: 'desc'
+        },
+        include: {
+            creator: true,
+            receiver: true,
+            likes: true,
+            comments: true,
+        },
+        skip: page,
+        take: pageSize
+    })
 
+    return postByFollowed;
+}
+
+const getOtherPost = async(userId, page, pageSize) =>{
+    const followingUser = await prisma.follow.findMany({
+        where: {
+            followerId: userId
+        }
+    })
+
+    const postLikedId = await prisma.like.findMany({
+        where: {
+            userId: {in: followingUser.map(following => following.followingId)}
+        },
+        skip: page,
+        take: pageSize
+    })
+
+    const postLiked = await prisma.post.findMany({
+        where: {
+            id: {in: postLikedId.map(post => post.id)}
+        },
+        orderBy: {
+            createdOn: 'desc'
+        },
+        include: {
+            creator: true,
+            receiver: true,
+            likes: true,
+            comments: true,
+        },
+        skip: page,
+        take: pageSize
+    })
+
+    const postCommentedId = await prisma.comment.findMany({
+        where: {
+            commentatorId: {in: followingUser.map(following => following.followingId)}
+        },
+        skip: page,
+        take: pageSize
+    })
+
+    const postCommented = await prisma.post.findMany({
+        where: {
+            id: {in: postCommentedId.map(post => post.id)}
+        },
+        orderBy: {
+            createdOn: 'desc'
+        },
+        include: {
+            creator: true,
+            receiver: true,
+            likes: true,
+            comments: true,
+        },
+        skip: page,
+        take: pageSize
+    })
+
+    postCommented.forEach(post, index => {
+        postCommented[index].message = `Publicação curtida por alguém que você segue.`;
+    })
+    
+    postLiked.forEach(post, index => {
+        postCommented[index].message = `Publicação comentada por alguém que você segue.`;
+    })
+
+    let finalPost = postLiked.concat(postCommented);
+    finalPost = finalPost.sort(() => Math.random() - 0.5);
+    return finalPost;
+}
 
 const getPostsNotApprovedByUser = async(id) => {
     return await prisma.post.findMany({
@@ -98,4 +198,4 @@ const getPostsNotViwedByUser = async(id) => {
     })
 }
 
-module.exports = {insertPost, updatePost, deletePost, getPostById,getPostApprovedByUser, getPostsNotApprovedByUser, getPostsNotViwedByUser};
+module.exports = {insertPost, updatePost, deletePost, getPostById, getPostToFeedUser, getOtherPost, getPostApprovedByUser, getPostsNotApprovedByUser, getPostsNotViwedByUser};

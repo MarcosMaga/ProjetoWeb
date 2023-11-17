@@ -1,9 +1,9 @@
 const inboxController = require('../controllers/inbox');
-const userLogger = require('../middlewares/logged');
+const userLogged = require('../middlewares/logged');
 
 module.exports = {
     inbox: (app) => {
-        app.get('/inbox', userLogger, (req, res) => {
+        app.get('/inbox', userLogged, (req, res) => {
             inboxController.inbox(req, res);
         })
     }

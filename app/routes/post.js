@@ -1,24 +1,24 @@
 const postsController = require('../controllers/post');
-const userLogger = require('../middlewares/logged');
+const userLogged = require('../middlewares/logged');
 
 module.exports = {
     post: (app) => {
-        app.post('/post', userLogger, (req, res) => {
+        app.post('/post', userLogged, (req, res) => {
             postsController.create(req, res);
         }),
         app.get('/post/:id', (req, res) => {
             postsController.create(req, res);
         })
-        app.get('/post/delete/:id', userLogger, (req, res) => {
+        app.get('/post/delete/:id', userLogged, (req, res) => {
             postsController.del(req, res);
         }),
-        app.get('/news/post', userLogger, (req, res) => {
+        app.get('/news/post', userLogged, (req, res) => {
             postsController.news(req, res);
         })
-        app.post('/post/approved/:id', userLogger, (req, res) => {
+        app.post('/post/approved/:id', userLogged, (req, res) => {
             postsController.approved(req, res);
         })
-        app.get('/post/liked/:id', userLogger,(req, res) => {
+        app.get('/post/liked/:id', userLogged,(req, res) => {
             postsController.liked(req, res);
         })
     }

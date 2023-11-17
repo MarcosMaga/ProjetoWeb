@@ -259,7 +259,6 @@
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log(data.posts.length);
                 if(data.posts.length > 0){
                     currentPage++;
                     console.log(data.posts.length);
@@ -290,7 +289,6 @@
                                     <p class="text-creator">${post.textCreator}</p>
                                 </div>
                                 <div class="info-post-data">
-                                    <p style="margin-bottom: 10px;" class="text-receiver">${post.textCreator}</p>
                                     <p onclick="openLikes('${post.id}')" id="count_${post.id}" style="margin-left: 10px; cursor: pointer"><strong>0</strong> curtidas</p><p id="comments_${post.id}" style="margin-left: 10px; cursor: pointer;"><strong>${post.comments.length}</strong> comentários</p>
                                 </div>`;
 
@@ -324,7 +322,6 @@
                                 <a class="delete-post" href="/post/delete/${post.id}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                             </div>
                             <div class="info-post-data">
-                                <p style="margin-bottom: 10px;" class="text-receiver">${post.textCreator}</p>
                                 <p onclick="openLikes('${post.id}')" id="count_${post.id}" style="margin-left: 10px; cursor: pointer"><strong>0</strong> curtidas</p><p id="comments_${post.id}" style="margin-left: 10px; cursor: pointer;"><strong>${post.comments.length}</strong> comentários</p>
                             </div>`;
 

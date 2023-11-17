@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed</title>
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/perfil.css">
+    <link rel="stylesheet" href="/css/feed.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/js/like.js"></script>
+</head>
+<body>
+    <%- include(`../components/menu`) %>
+    <div class="content">
+        <div class="feed-post">
+            <form action="/post">
+                <div class="post-inputs">
+                    <img src="<%= user.picture %>" alt="">
+                    <input type="text" name="textCreator" placeholder="Faça um depoimento para alguém">
+                </div>
+                <hr>
+                <button type="submit">
+                    Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </button>
+                <label for="receiverId"><strong>Para</strong></label>
+                <select name="receiverId" required>
+                    <% user.followings.forEach(f => { %>
+                        <option value="<%=f.following.id%>"><strong>@<%=f.following.username%></strong></option>
+                    <% }) %>
+                </select>
+            </form>
+        </div>
+        <div class="post-data" id="post-data">
+            <% if(posts && posts.length > 0){ 
+                posts.forEach(post => { %>
+                    <div id="post-division" class="post-division">
+                        <p>De <a href="/perfil/<%=post.creator.username%>"><%=post.creator.username%></a> para <a href="/perfil/<%=post.receiver.username%>"><%=post.receiver.username%></a></p>
+                        <div class="post-content">
+                            <div class="post-content-receiver">
+                                <img src="<%=post.receiver.picture%>">
+                                <a href="/perfil/<%=post.receiver.username%>"><%=post.receiver.name%></a>
+                                <div class="post-name">
+                                    <p>@<%=post.receiver.username%> </p>
+                                    <p>•</p>
+                                    <p><%=helpers.compareTime(post.createdOn)%></p>
+                                </div>
+                                <% if(user && (user.id == post.creatorId || user.id == post.receiverId)) { %>
+                                    <a class="delete-post" href="/post/delete/<%=post.id%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                <% } %>
+                            </div>
+                            <p class="text-receiver"><%= post.textReceiver %></p>
+                            <div class="post-creator">
+                                <div class="post-creator-info">
+                                    <img src="<%=post.creator.picture%>">
+                                    <p><a href="/perfil/<%=post.creator.username%>"><%=post.creator.name%></a></p>    
+                                    <p style="margin-left:5px; color:#1d1d1d;">@<%=post.creator.username%></p>
+                                </div>
+                                <p class="text-creator"><%= post.textCreator %></p>
+                            </div>
+                            <div class="info-post-data">
+                                <p onclick="openLikes('<%= post.id %>')" id="count_<%=post.id%>" style="margin-left: 10px; cursor: pointer;"><strong><%= post.likes.length %></strong> curtidas</p>
+                                <p id="comments_<%=post.id%>" style="margin-left: 10px; cursor: pointer;"><strong><%= post.comments.length %></strong> comentários</p>
+                            </div>
+                            <% if(user) { %>
+                                <hr>
+                                <div class="actions">
+                                    <script>isLiked("<%=post.id%>");</script>
+                                    <button id="button_<%=post.id%>" onclick="likeAction(event)">Curtir <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+                                    <button onclick="openComments('<%=post.id%>')">Comentar <i class="fa fa-comment-o" aria-hidden="true"></i></button>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% }) %>
+            <% } else { %>  
+                <p style="text-align: center; color: #757575">Não temos publicações para você :/</p>
+            <% } %>
+        </div>
+    </div>
+    <div style="display: none;" class="followers_table" id="likes">
+        <div style="display: flex;">
+            <h2 style="text-align: left;">Likes</h2>
+            <h2 onclick="openLikes()" style="margin-left: auto; cursor: pointer;">X</h2>
+        </div>
+        <hr>
+        <div id="users-list">
+        </div>
+    </div>
+    <% if(user) { %>
+    <div style="display: none;" class="followers_table" id="comments">
+        <div style="display: flex;">
+            <h2 style="text-align: left;">Comentários</h2>
+            <h2 onclick="openComments()" style="margin-left: auto; cursor: pointer;">X</h2>
+        </div>
+        <div class="user-comment-form">
+            <img src="<%= user.picture %>" alt="">
+            <input type="text" id="textComment" placeholder="Digite seu comentário">
+            <button id="send-comment">Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </div>
+        <hr>
+        <div id="comments-list">
+        </div>
+        <a onclick="actionMoreComments()" class="load-comments" href="#">Carregar mais comentários</a>
+    </div>
+    <% } %>
+</body>
+<script>
+    function goToPerfil(event){
+        window.location.href = '/perfil/' + event;
+    }
+
+    function openLikes(post){
+        if(document.getElementById("likes").style.display == 'block')
+            document.getElementById("likes").style.display = 'none';
+        else{
+            postInfo(post);
+            document.getElementById("likes").style.display = 'block'
+        }
+    }
+
+    function openComments(post){
+        if(document.getElementById("comments").style.display == 'block'){
+            setTarget(0);
+            document.getElementById("comments").style.display = 'none';
+        }
+        else{
+            setTarget(post);
+            loadMoreComments(post);
+            document.getElementById("comments").style.display = 'block'
+        }
+    }
+    </script>
+<script src="/js/compareTime.js"></script>
+<script src="/js/feed.js"></script>
+<script src="/js/comments.js"></script>
+</html>

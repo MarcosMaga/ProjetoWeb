@@ -1,9 +1,9 @@
 const likesController = require('../controllers/like')
-const userLogger = require('../middlewares/logged');
+const userLogged = require('../middlewares/logged');
 
 module.exports = {
     like: (app) => {
-        app.get('/like/:id', userLogger, (req, res) => {
+        app.get('/like/:id', userLogged, (req, res) => {
             likesController.action(req, res);
         })
     }

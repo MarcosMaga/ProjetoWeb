@@ -1,9 +1,9 @@
-const userLogger = require('../middlewares/logged');
+const userLogged = require('../middlewares/logged');
 const searchController = require('../controllers/search');
 
 module.exports = {
     search: (app) => {
-        app.get('/search', userLogger, (req, res) => {
+        app.get('/search', userLogged, (req, res) => {
             searchController.search(req, res);
         })
     }

@@ -19,6 +19,17 @@ const deleteFollow = async(id) => {
     });
 }
 
+const getFollowingByUser = async(id) => {
+    return await prisma.follow.findMany({
+        where: {
+            followerId: parseInt(id)
+        },
+        include: {
+            following: true
+        }
+    })
+}
+
 const getFollowById = async(id) => {
     const [followerId, followingId] = id.split('-').map(Number);
     return await prisma.follow.findUnique({
@@ -31,4 +42,4 @@ const getFollowById = async(id) => {
     });
 }
 
-module.exports = {insertFollow, deleteFollow, getFollowById}
+module.exports = {insertFollow, deleteFollow, getFollowingByUser, getFollowById}

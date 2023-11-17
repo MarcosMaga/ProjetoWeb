@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 const create = (req, res) => {
     if(req.method == 'POST'){
         let data = req.body;
-        data.creatorId = parseInt(data.creatorId);
+        data.creatorId = parseInt(req.session.user.id);
         data.receiverId = parseInt(data.receiverId);
         postsModel.insertPost(req.body)
             .then((post) => {
