@@ -11,7 +11,7 @@ const action = (req, res) => {
 
         followModels.getFollowingByUser(req.session.user.id)
             .then((followings) => {
-                postsModels.getPostToFeedUser(req.session.user.id, (page - 1) * pageSize, pageSize)
+                postsModels.getPostToFeedUser(parseInt(req.session.user.id), page, pageSize)
                     .then((posts) => {
                         if(page == 1){
                             let user = req.session.user;
@@ -35,18 +35,4 @@ const action = (req, res) => {
     }
 }
 
-const other = (req, res) => {
-    const page = req.query.page || 1;
-    const pageSize = 5;
-
-    postsModels.getOtherPost(req.session.user.id, (page - 1) * pageSize, pageSize)
-        .then((posts) => {
-            res.status(200).send({ user: req.session.user, posts });
-        }).catch((error) => {
-            console.log(error);
-        }).finally(async () => {
-            await prisma.$disconnect();
-        })
-}
-
-module.exports = {action, other};
+module.exports = {action};

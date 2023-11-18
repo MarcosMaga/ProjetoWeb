@@ -6,8 +6,5 @@ module.exports = {
         app.get('/feed', userLogged, (req, res) => {
             feedController.action(req, res);
         })
-        app.get('/feed/other', userLogged, (req, res) => {
-            feedController.action(req, res);
-        })
     }
 }

@@ -75,106 +75,92 @@ const getPostApprovedByUser = async (id, page, pageSize) => {
 }
 
 const getPostToFeedUser = async(userId, page, pageSize) => {
-    const followingUser = await prisma.follow.findMany({
+    const result = await prisma.post.findMany({
         where: {
-            followerId: userId
-        }
-    })
-
-    const postByFollowed = await prisma.post.findMany({
-        where: {
-            OR: [
-                {creatorId: {in: followingUser.map(following => following.followingId)}},
-                {receiverId: {in: followingUser.map(following => following.followingId)}}
-            ],
-            AND: [
-                {approved: true}
-            ]
+          approved: true,
+          OR: [
+            {
+              creatorId: {
+                in: (await prisma.follow.findMany({
+                  where: {
+                    followerId: userId,
+                  },
+                  select: {
+                    followingId: true,
+                  },
+                })).map((follow) => follow.followingId),
+              },
+            },
+            {
+              receiverId: {
+                in: (await prisma.follow.findMany({
+                  where: {
+                    followerId: userId,
+                  },
+                  select: {
+                    followingId: true,
+                  },
+                })).map((follow) => follow.followingId),
+              },
+            },
+            {
+              id: {
+                in: (await prisma.like.findMany({
+                  where: {
+                    userId: {
+                      in: (await prisma.follow.findMany({
+                        where: {
+                          followerId: userId,
+                        },
+                        select: {
+                          followingId: true,
+                        },
+                      })).map((follow) => follow.followingId),
+                    },
+                  },
+                  select: {
+                    postId: true,
+                  },
+                })).map((like) => like.postId),
+              },
+            },
+            {
+              id: {
+                in: (await prisma.comment.findMany({
+                  where: {
+                    commentatorId: {
+                      in: (await prisma.follow.findMany({
+                        where: {
+                          followerId: userId,
+                        },
+                        select: {
+                          followingId: true,
+                        },
+                      })).map((follow) => follow.followingId),
+                    },
+                  },
+                  select: {
+                    postId: true,
+                  },
+                })).map((comment) => comment.postId),
+              },
+            },
+          ],
         },
         orderBy: {
-            createdOn: 'desc'
+          createdOn: 'desc',
         },
         include: {
-            creator: true,
             receiver: true,
+            creator: true,
             likes: true,
             comments: true,
         },
-        skip: page,
+        skip: (page - 1) * pageSize,
         take: pageSize
-    })
-
-    return postByFollowed;
-}
-
-const getOtherPost = async(userId, page, pageSize) =>{
-    const followingUser = await prisma.follow.findMany({
-        where: {
-            followerId: userId
-        }
-    })
-
-    const postLikedId = await prisma.like.findMany({
-        where: {
-            userId: {in: followingUser.map(following => following.followingId)}
-        },
-        skip: page,
-        take: pageSize
-    })
-
-    const postLiked = await prisma.post.findMany({
-        where: {
-            id: {in: postLikedId.map(post => post.id)}
-        },
-        orderBy: {
-            createdOn: 'desc'
-        },
-        include: {
-            creator: true,
-            receiver: true,
-            likes: true,
-            comments: true,
-        },
-        skip: page,
-        take: pageSize
-    })
-
-    const postCommentedId = await prisma.comment.findMany({
-        where: {
-            commentatorId: {in: followingUser.map(following => following.followingId)}
-        },
-        skip: page,
-        take: pageSize
-    })
-
-    const postCommented = await prisma.post.findMany({
-        where: {
-            id: {in: postCommentedId.map(post => post.id)}
-        },
-        orderBy: {
-            createdOn: 'desc'
-        },
-        include: {
-            creator: true,
-            receiver: true,
-            likes: true,
-            comments: true,
-        },
-        skip: page,
-        take: pageSize
-    })
-
-    postCommented.forEach(post, index => {
-        postCommented[index].message = `Publicação curtida por alguém que você segue.`;
-    })
+      });
     
-    postLiked.forEach(post, index => {
-        postCommented[index].message = `Publicação comentada por alguém que você segue.`;
-    })
-
-    let finalPost = postLiked.concat(postCommented);
-    finalPost = finalPost.sort(() => Math.random() - 0.5);
-    return finalPost;
+      return result;
 }
 
 const getPostsNotApprovedByUser = async(id) => {
@@ -198,4 +184,4 @@ const getPostsNotViwedByUser = async(id) => {
     })
 }
 
-module.exports = {insertPost, updatePost, deletePost, getPostById, getPostToFeedUser, getOtherPost, getPostApprovedByUser, getPostsNotApprovedByUser, getPostsNotViwedByUser};
+module.exports = {insertPost, updatePost, deletePost, getPostById, getPostToFeedUser, getPostApprovedByUser, getPostsNotApprovedByUser, getPostsNotViwedByUser};
