@@ -171,6 +171,9 @@ const getPostsNotApprovedByUser = async(id) => {
         },
         include: {
             creator: true
+        },
+        orderBy: {
+          createdOn: 'desc'
         }
     })
 }

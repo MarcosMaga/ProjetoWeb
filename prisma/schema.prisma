@@ -30,6 +30,9 @@ model User {
 
   comments Comment[] @relation("Commentator")
 
+  notificationFrom Notification[] @relation("From")
+  notificationTo Notification[] @relation("To")
+
   @@map("users")
 }
 
@@ -82,4 +85,16 @@ model Like{
   @@id([userId, postId])
 
   @@map("likes")
+}
+
+model Notification{
+  id Int @id @default(autoincrement())
+  from User @relation("From", fields: [fromId], references: [id])
+  fromId Int
+  to User @relation("To", fields: [toId], references: [id])
+  toId Int
+  link String
+  type String
+  viewed Boolean @default(false)
+  createdOn DateTime @default(now())
 }

@@ -88,8 +88,6 @@ function loadMoreComments() {
                     commentsContainer.appendChild(commentDiv);
                 })
             }else{
-                let load_comments = document.getElementById('load-comments');
-                load_comments.parentNode.removeChild(load_comments);
                 block_c = true;
             }
             loading_c = false;

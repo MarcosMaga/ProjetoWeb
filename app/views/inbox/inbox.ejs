@@ -20,6 +20,11 @@
             <div class="content-wrapper">
                 <% posts.forEach(post => { %>
                     <div class="post-area">
+                        <% if(!post.viewed){ %>
+                            <div style="display: flex;">
+                                <p style="background-color: red; padding: 4px; border-radius: 10px; font-size: small; margin: 5px; margin-left: auto; margin-bottom: 0; font-weight: bold;">NOVO</p>
+                            </div>
+                        <% } %>
                         <div class="post-info">
                             <img src="<%= post.creator.picture %>" alt="">
                             <h2><%= post.creator.username %></h2>
