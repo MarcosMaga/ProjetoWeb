@@ -1,12 +1,19 @@
 const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
 const expressSession = require('express-session');
+const sessionStore = new expressSession.MemoryStore();
+const sharedSession = require('express-socket.io-session');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const path = require('path');
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
 
+app.io = io;
 app.set('view engine', 'ejs');
 app.set('views', './app/views');
 app.use(express.static(__dirname + '/../public'));
@@ -36,13 +43,20 @@ app.locals.helpers = helpers;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use(expressSession({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: true
+const sessionConfig = expressSession({
+  secret: process.env.SECRET,
+  resave: true,
+  saveUninitialized: true,
+  store: sessionStore
+});
+
+app.use(sessionConfig);
+
+app.io.use(sharedSession(sessionConfig, {
+  autoSave: true
 }));
 
-app.listen(3000, () => {
+server.listen(3000, () => {
     console.log("Servidor iniciado na porta 3000");
 })
 

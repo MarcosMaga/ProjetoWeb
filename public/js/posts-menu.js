@@ -1,42 +1,24 @@
 let notificationsNumber = 0;
 let first = true;
 
-function getNewsPosts() {
-  fetch('/news/post', {
-    method: 'GET', // Este é o método padrão, então você pode omiti-lo
-    headers: {
-      'Content-Type': 'application/json', // Se necessário, ajuste os cabeçalhos
-      // Adicione quaisquer outros cabeçalhos necessários aqui
-    },
-  })
-    .then(response => {
-      if (!response.ok) {
-        window.location.reload();
-        throw new Error('Erro na solicitação');
-      }
-      return response.json();
-    })
-    .then(data => {
-      if(data.length > notificationsNumber && !first){
-        var audio = new Audio('/audio/notification.mp3');
-        audio.play();
-      }
+const socket = io();
 
-      notificationsNumber = data.length;
-      first = false;
+socket.on('inbox', (message) => {
+  console.log(message)
+  if(message > notificationsNumber && !first){
+    var audio = new Audio('/audio/notification.mp3');
+    audio.play();
+  }
 
-      if (data.length > 0 && data.length < 10) {
-        document.getElementById('in-num').style.display = 'flex';
-        document.getElementById('inbox-number').innerHTML = data.length;
-      }
-      else if (data.length >= 10) {
-        document.getElementById('in-num').style.display = 'flex';
-        document.getElementById('inbox-number').innerHTML = '9+';
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
-}
+  notificationsNumber = message;
+  first = false;
 
-getNewsPosts();
+  if (message > 0 && message < 10) {
+    document.getElementById('in-num').style.display = 'flex';
+    document.getElementById('inbox-number').innerHTML = message;
+  }
+  else if (message >= 10) {
+    document.getElementById('in-num').style.display = 'flex';
+    document.getElementById('inbox-number').innerHTML = '9+';
+  }
+})

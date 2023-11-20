@@ -39,4 +39,15 @@ const inbox = (req, res) => {
         });
 }
 
-module.exports = { inbox }
+const notViewed = (socket) => {
+    if(socket.handshake.session.user){
+        setInterval(() => {
+            postsModel.getPostsNotViwedByUser(socket.handshake.session.user.id)
+                .then((posts) => {
+                    socket.emit('inbox', posts.length);
+                })
+        }, 2000);
+    }
+}
+
+module.exports = { inbox, notViewed }
