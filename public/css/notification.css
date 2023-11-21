@@ -1,0 +1,99 @@
+h1{
+    color: white;
+    margin: 30px;
+    margin-bottom: 10px;
+}
+
+form{
+    margin: 20px;
+}
+
+label{
+    color: white;
+    display: block;
+    margin: 10px;
+}
+
+input{
+    width: 30%;
+    font-size: medium;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+input[type="submit"], button{
+    width: auto;
+    padding: 10px;
+    color: white;
+    background-color: #5CB85C;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.users-list{
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.user{
+    display: flex;
+    border-bottom: 1px solid #393939;
+    cursor: pointer;
+}
+
+.user:hover{
+    background-color: #393939;
+}
+
+.user .user-text{
+    display: block;
+}
+
+.user .user-text p{
+    text-align: left;
+    color: white;
+}
+
+.user img{
+    width: 12%;
+    border-radius: 50%;
+    margin: 10px
+}
+
+p{
+    color: #393939;
+    text-align: center;
+}
+
+hr{
+    border-color: #393939;
+    margin: 5px;
+}
+
+#search-form{
+    display: flex;
+}
+
+.info{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+.info p{
+    color: white;
+    margin-bottom: 0px;
+}
+
+.info .time-info{
+    color: #757575;
+    margin-top: 0px;
+    margin-right: auto;
+    text-align: left;
+}
+
+

@@ -97,4 +97,6 @@ model Notification{
   type String
   viewed Boolean @default(false)
   createdOn DateTime @default(now())
+
+  @@map("notifications")
 }

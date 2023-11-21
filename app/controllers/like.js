@@ -1,4 +1,5 @@
 const likesModel = require('../models/like');
+const notificationsModel = require('../models/notification');
 const logger = require('../../config/logger');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -23,6 +24,16 @@ const action = (req, res) => {
                 
                 likesModel.insertLike(data)
                     .then(() => {
+                        const notification = {
+                            fromId: req.session.user.id,
+                            link: `/view/post/${data.postId}`,
+                            type: 'like',
+                            postId: data.postId
+                        };
+                        notificationsModel.insertPostNotification(notification)
+                            .finally(async () => {
+                                await prisma.$disconnect();
+                            })
                         res.status(200).send({likeStatus: true});
                     }).catch((error) => {
                         logger.error(`Erro ao inserir like de ID ${id}`);

@@ -1,4 +1,5 @@
 const commentsModel = require('../models/comment');
+const notificationsModel = require('../models/notification');
 const logger = require('../../config/logger');
 const {PrismaClient} = require('@prisma/client');
 const comment = require('../routes/comment');
@@ -11,6 +12,16 @@ const action = (req, res) => {
         data.postId = parseInt(data.postId);
         commentsModel.insertComment(data)
             .then((comment) => {
+                const notification = {
+                    fromId: req.session.user.id,
+                    link: `/view/post/${data.postId}`,
+                    type: 'comment',
+                    postId: data.postId
+                }
+                notificationsModel.insertPostNotification(notification)
+                    .finally(async () => {
+                        await prisma.$disconnect();
+                    })
                 res.status(200).send(comment);
             }).catch((error) => {
                 console.log(error);

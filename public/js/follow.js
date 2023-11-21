@@ -5,7 +5,7 @@ fetch(`/follow/${bt.id}`)
         if (!response.ok) {
             throw new Error('Erro na solicitação GET, Status: ' + response.status);
         }
-        return response.json(); // Analisar a resposta como JSON, se aplicável
+        return response.json();
     })
     .then(data => {
         bt.innerHTML = data.msg;
@@ -19,21 +19,19 @@ function callFollow() {
     const data = {followerId: followerId, followingId: followingId}
 
     const options = {
-        method: 'POST', // Método HTTP POST
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json', // Tipo de conteúdo (JSON no exemplo)
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Converter o objeto em JSON
+        body: JSON.stringify(data), 
     };
 
-    // Faça a solicitação POST usando a API Fetch
     fetch('/follow', options)
         .then(response => {
-            // Verifique o código de status da resposta
             if (!response.ok) {
                 throw new Error('Erro na solicitação POST, Status: ' + response.status);
             }
-            return response.json(); // Analisar a resposta como JSON, se aplicável
+            return response.json();
         })
         .then(data => {
             bt.innerHTML = data.msg;

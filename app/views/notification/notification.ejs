@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar</title>
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <% if(user) { %>
+        <%- include(`../components/menu`) %>
+    <% } %>
+        <div class="content">
+            <h1>Notificações</h1>
+            <hr>
+            <div class="users-list">
+                <% if(!notifications) { %>
+                    <p>Nenhuma notificação encontrada.</p>
+                <% } else { 
+                    notifications.forEach((u) => { %>
+                        <div class="user" onclick="goToPerfil('<%= u.link%>')" style="color: white; <%= u.viewed ? '' : 'background-color: #393939' %>">
+                            <img src="<%= u.from.picture %>" alt="">
+                            <div class="info">
+                                <% 
+                                    switch(u.type){
+                                        case 'follow': %> 
+                                            <p><strong><%= u.from.username %></strong> começou a te seguir.</p>
+                                            <p class="time-info"><%= helpers.compareTime(u.createdOn) %></p>
+                                        <% break;
+                                        case 'comment': %> 
+                                            <p><strong><%= u.from.username %></strong> comentou em um depoimento seu.</p>
+                                            <p class="time-info"><%= helpers.compareTime(u.createdOn) %></p>
+                                        <% break;
+                                        case 'like': %> 
+                                            <p><strong><%= u.from.username %></strong> curtiu em um depoimento seu.</p>
+                                            <p class="time-info"><%= helpers.compareTime(u.createdOn) %></p>
+                                         <% break;
+                                    }
+                                %>
+                            </div>
+                        </div>
+                   <% }) 
+                 } %>
+            </div>
+        </div>
+</body>
+<script>
+    function goToPerfil(event){
+        window.location.href = event;
+    }
+</script>
+</html>
