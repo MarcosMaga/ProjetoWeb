@@ -5,8 +5,12 @@ const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const signin = (req, res) => {
-    if(req.method === 'GET')
-        res.render('session/login.ejs', {error: null});
+    if(req.method === 'GET'){
+        if(!req.session.user)
+            res.render('session/login.ejs', {error: null});
+        else
+            res.redirect(`/perfil/${req.session.user.username}`);
+    }
     else if(req.method === 'POST'){
         usersModel.getUserByEmail(req.body.email)
             .then((user) => {
