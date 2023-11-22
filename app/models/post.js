@@ -37,8 +37,10 @@ const getPostById = async(id) => {
                 include: {
                     user: true
                 }
-            }
-
+            },
+            creator: true,
+            receiver: true,
+            comments: true
         }
     })
 }
@@ -153,7 +155,11 @@ const getPostToFeedUser = async(userId, page, pageSize) => {
         include: {
             receiver: true,
             creator: true,
-            likes: true,
+            likes: {
+              include: {
+                  user: true
+              }
+            },
             comments: true,
         },
         skip: (page - 1) * pageSize,

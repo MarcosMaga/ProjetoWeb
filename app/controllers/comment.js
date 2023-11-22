@@ -14,7 +14,7 @@ const action = (req, res) => {
             .then((comment) => {
                 const notification = {
                     fromId: req.session.user.id,
-                    link: `/view/post/${data.postId}`,
+                    link: `/view/post/${data.postId}?search=comment_${comment.id}`,
                     type: 'comment',
                     postId: data.postId
                 }

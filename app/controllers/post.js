@@ -31,6 +31,18 @@ const create = (req, res) => {
     
 }
 
+const view = (req, res) => {
+    postsModel.getPostById(parseInt(req.params.id))
+        .then((post) => {
+            res.render('post/post.ejs', {post, user: req.session.user});
+         }).catch((error) => {
+            logger.error(`Erro ao achar Post ${req.params.id}. Código: ${error.code}`);
+            res.status(400).send(error);
+        }).finally(async () => {
+            await prisma.$disconnect();
+        })
+}
+
 const news = (req, res) => {
     postsModel.getPostsNotViwedByUser(req.session.user.id)
         .then((posts) => {
@@ -113,4 +125,4 @@ const liked = (req, res) => {
         })
 }
 
-module.exports = { create, news, del, approved, liked };
+module.exports = { create, news, view, del, approved, liked };
