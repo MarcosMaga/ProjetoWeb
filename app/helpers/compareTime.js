@@ -15,7 +15,7 @@ module.exports = {
         const diffSecond = Math.floor(diffMillis / 1000);
 
         if (diffSecond < 60) {
-            return `${diffSecond} ${diffSecond > 1 ? 'segundo' : 'segundos'}`;
+            return `${diffSecond} ${diffSecond > 1 ? 'segundos' : 'segundo'}`;
         } else {
             const diffMinute = Math.floor(diffSecond / 60);
 

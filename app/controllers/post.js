@@ -11,7 +11,7 @@ const create = (req, res) => {
         data.receiverId = parseInt(data.receiverId);
         postsModel.insertPost(req.body)
             .then((post) => {
-                res.redirect(`/perfil/${post.receiver.username}`);
+                res.redirect(req.get('Referer'));
             }).catch((error) => {
                 logger.error(`Erro ao criar Post de  usuário ${data.creatorId} para usuário ${data.receiverId}. Código: ${error.code}`);
             }).finally(async () => {

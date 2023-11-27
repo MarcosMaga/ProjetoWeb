@@ -56,7 +56,7 @@ app.io.use(sharedSession(sessionConfig, {
   autoSave: true
 }));
 
-server.listen(3000, () => {
+server.listen(3000, '0.0.0.0', () => {
     console.log("Servidor iniciado na porta 3000");
 })
 
