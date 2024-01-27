@@ -12,4 +12,4 @@ RUN npx prisma generate
 
 EXPOSE 3000
 
-CMD ["node", "app.js"]
+CMD ["sh", "-c", "sleep 60 && npx prisma migrate dev --name first && node app.js"]

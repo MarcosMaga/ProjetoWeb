@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:5.7
+    container_name: "mysql-container"
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    env_file:
+      - ./config/db.env
+    networks:
+      - backend
+  
+  app: 
+    depends_on:
+      - db
+    build: .
+    ports:
+      - "3000:3000"
+    container_name: 'testify-container'
+    restart: always
+    networks:
+      - backend
+volumes:
+  db_data: {}
+networks:
+  backend:
