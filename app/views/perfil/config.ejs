@@ -19,7 +19,7 @@
                 <li><i class="fa fa-search" aria-hidden="true"></i><a href="/search">Pesquisar</a></li>
                 <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="#">Caixa de Entrada</a></li>
                 <li><i class="fa fa-user-circle-o" aria-hidden="true"></i><a
-                        href="<%= helpers.baseUrl(`perfil/${user.username}`)%>">Perfil</a></li>
+                        href="<%= `/perfil/${user.username}`%>">Perfil</a></li>
                 <li><i class="fa fa-sign-out" aria-hidden="true"></i></i><a href="/logout">Sair</a></li>
             </ul>
         </div>
@@ -37,7 +37,7 @@
                         </ul>
                     </section>
                 <% } %>
-                <form action="<%= helpers.baseUrl('config/perfil')%>" method="POST">
+                <form action="/config/perfil" method="POST">
                     <label for="name">Nome</label>
                     <input type="text" name="name" value="<%=user.name%>">
                     <label for="username">Nome de usuário</label>
@@ -49,7 +49,7 @@
                 <hr>
                 <h1>Foto de perfil</h1>
                 <img id="pic" src="<%= user.picture %>" alt="">
-                <form action="<%= helpers.baseUrl('config/perfil/picture')%>" method="POST" enctype="multipart/form-data">
+                <form action="/config/perfil/picture" method="POST" enctype="multipart/form-data">
                     <div class="custom-file-input">
                         <input onchange="openToSend()" type="file" id="fileInput" name="fileInput" accept="image/*" />
                         <label for="fileInput">Trocar</label>

@@ -26,7 +26,7 @@
             <div class="data">
                 <h2>@<%= perfil.username %>
                     <% if (user && perfil.id == user.id) { %>
-                      <a class="config" href="<%= helpers.baseUrl('config/perfil')%>">
+                      <a class="config" href="/config/perfil">
                         <i class="fa fa-cog" aria-hidden="true"></i>
                       </a>
                     <% } else if(user && perfil.id != user.id) { %>
