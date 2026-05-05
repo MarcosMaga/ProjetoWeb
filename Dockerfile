@@ -2,11 +2,10 @@ FROM node:16
 
 WORKDIR /app
 
-COPY package*.json .
+COPY package*.json ./
+RUN npm install --build-from-source
 
-RUN npm install
-
-COPY . . 
+COPY . .
 
 RUN npx prisma generate
 
