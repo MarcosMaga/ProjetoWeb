@@ -87,7 +87,7 @@ const picture = async (req, res) => {
             .resize(640,640)
             .toFile(path, (err, info) => {
                 if(err)
-                    res.render('errors/404.ejs', {error: 'Oops... tivemos um probleminha :/'});
+                    res.render('errors/404.ejs', {error: `Oops... tivemos um probleminha :/ ${err.message}`});
                 else{
                     const data = {picture: '/uploads/img/perfil/' + timestamp + req.file.originalname};
                     usersModel.updateUser(req.session.user.id, data)
